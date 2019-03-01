@@ -35,7 +35,7 @@ public class ATM {
             screen.displayMessageLine("\nWelcome!");       
             authenticateUser(); // authenticate user
          }
-         
+             
          performTransactions(); // user is now authenticated
          userAuthenticated = false; // reset before next ATM session
          currentAccountNumber = 0; // reset before next ATM session
@@ -92,6 +92,8 @@ public class ATM {
                         createTransaction(mainMenuSelection);
                 
                 currentTransaction.execute();
+                new History(currentAccountNumber).addTransaction(currentAccountNumber, mainMenuSelection, currentTransaction);
+                new History(currentAccountNumber).printHistory();
                 break;
             case DEPOSIT:
                 currentTransaction =
