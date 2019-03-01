@@ -14,7 +14,8 @@ public class ATM {
    private static final int BALANCE_INQUIRY = 1;
    private static final int WITHDRAWAL = 2;
    private static final int DEPOSIT = 3;
-   private static final int EXIT = 4;
+   private static final int TRANSFER = 4;
+   private static final int EXIT = 5;
 
    // no-argument ATM constructor initializes instance variables
    public ATM() {
@@ -31,7 +32,9 @@ public class ATM {
       // welcome and authenticate user; perform transactions
       while (true) {
          // loop while user is not yet authenticated
+         
          while (!userAuthenticated) {
+             
             screen.displayMessageLine("\nWelcome!");       
             authenticateUser(); // authenticate user
          }
@@ -40,28 +43,46 @@ public class ATM {
          userAuthenticated = false; // reset before next ATM session
          currentAccountNumber = 0; // reset before next ATM session
          screen.displayMessageLine("\nThank you! Goodbye!");
-      }
+        }
    }
-
+   
    // attempts to authenticate user against database
    private void authenticateUser() {
-      screen.displayMessage("\nPlease enter your account number: ");
-      int accountNumber = keypad.getInput(); // input account number
-      screen.displayMessage("\nEnter your PIN: "); // prompt for PIN
-      int pin = keypad.getInput(); // input PIN
-      
-      // set userAuthenticated to boolean value returned by database
-      userAuthenticated = 
-         bankDatabase.authenticateUser(accountNumber, pin);
-      
-      // check whether authentication succeeded
-      if (userAuthenticated) {
-         currentAccountNumber = accountNumber; // save user's account #
-      } 
-      else {
-         screen.displayMessageLine(
-            "Invalid account number or PIN. Please try again.");
-      } 
+       int count = 0;
+       
+       while(!userAuthenticated && count < 3)
+       {
+            screen.displayMessage("\nPlease enter your account number: ");
+            int accountNumber = keypad.getInput(); // input account number
+            screen.displayMessage("\nEnter your PIN: "); // prompt for PIN
+            int pin = keypad.getInput(); // input PIN
+            
+            if(currentAccountNumber != accountNumber)
+            {
+                currentAccountNumber = accountNumber;
+                count = 0;
+            }
+            
+            // set userAuthenticated to boolean value returned by database
+            userAuthenticated = 
+               bankDatabase.authenticateUser(accountNumber, pin);
+
+            // check whether authentication succeeded
+            if (userAuthenticated) {
+               currentAccountNumber = accountNumber; // save user's account #
+            } 
+            else { 
+               screen.displayMessageLine(
+                  "Invalid account number or PIN. Please try again.");
+               count++;
+            }
+       }
+       
+       if(count == 3 && !userAuthenticated)
+       {
+           bankDatabase.blockStatus(currentAccountNumber);
+           screen.displayMessageLine("You tried 3 times, Your account is blocked!");
+       }
    } 
 
    // display the main menu and perform transactions
@@ -99,6 +120,12 @@ public class ATM {
                 
                 currentTransaction.execute();
                 break;
+            case TRANSFER:
+                currentTransaction =
+                        createTransaction(mainMenuSelection);
+                
+                currentTransaction.execute();
+                break;
             case EXIT: // user chose to terminate session
                screen.displayMessageLine("\nExiting the system...");
                userExited = true; // this ATM session should end
@@ -117,7 +144,8 @@ public class ATM {
       screen.displayMessageLine("1 - View my balance");
       screen.displayMessageLine("2 - Withdraw cash");
       screen.displayMessageLine("3 - Deposit funds");
-      screen.displayMessageLine("4 - Exit\n");
+      screen.displayMessageLine("4 - Transfer");
+      screen.displayMessageLine("5 - Exit\n");
       screen.displayMessage("Enter a choice: ");
       return keypad.getInput(); // return user's selection
    } 
@@ -136,6 +164,10 @@ public class ATM {
          case DEPOSIT:
             temp = new Deposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
             break;
+         case TRANSFER:
+             temp = new Transfer(currentAccountNumber, screen, keypad, bankDatabase );
+            break;
+                 
       }
 
       return temp;
