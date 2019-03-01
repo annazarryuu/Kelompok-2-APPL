@@ -27,4 +27,8 @@ public class CashDispenser {
          return false; // not enough bills available
       }
    }
-} 
+   
+   public int getCount(){
+       return count;
+    }
+}
