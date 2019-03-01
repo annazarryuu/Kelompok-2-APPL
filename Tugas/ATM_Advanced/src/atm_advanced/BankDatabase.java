@@ -31,6 +31,17 @@ public class BankDatabase {
          return false; // account number not found, so return false
       }
    } 
+   
+   public boolean depositValidated(int userAccountNumber) {
+       Account userAccount = getAccount(userAccountNumber);
+       
+       if(userAccount != null) {
+           userAccount.setAvailableBalance(userAccount.getTotalBalance());
+           return true;
+       } else {
+           return false;
+       }
+   }
 
    public double getAvailableBalance(int userAccountNumber) {
       return getAccount(userAccountNumber).getAvailableBalance();
