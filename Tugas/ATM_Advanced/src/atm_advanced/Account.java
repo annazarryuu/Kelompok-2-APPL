@@ -3,7 +3,7 @@ package atm_advanced;
 public class Account {
    private int accountNumber; // account number
    private int pin; // PIN for authentication
-   private double availableBalance; // funds available for withdrawal
+   double availableBalance; // funds available for withdrawal
    private double totalBalance; // funds available & pending deposits
 
    // Account constructor initializes attributes
@@ -34,6 +34,10 @@ public class Account {
    public double getTotalBalance() {
       return totalBalance;
    } 
+   
+   public void setAvailableBalance(double newTotalBalance) {
+       totalBalance = newTotalBalance;
+   }
 
    public void credit(double amount) {
        totalBalance += amount;
