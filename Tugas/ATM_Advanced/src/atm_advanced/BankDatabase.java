@@ -2,17 +2,57 @@ package atm_advanced;
 
 public class BankDatabase {
    private Account[] accounts; // array of Accounts
-   
+    Keypad keypad = new Keypad();
+    Screen screen = new Screen();
+    
    public BankDatabase() {
-      accounts = new Account[2]; // just 2 accounts for testing
-      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0);
-      accounts[1] = new Account(8765, 5678, 200.0, 200.0);  
+      accounts = new Account[5]; // just 2 accounts for testing
+      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false);
+      accounts[1] = new Account(8765, 5678, 200.0, 200.0, false); 
+      accounts[2] = new Account(00000, 00000, 0.0, 0.0, false);
+   }
+   
+   public void changePIN(int userAccountNumber){
+       
+       System.out.print("\nInsert Old PIN : ");
+       int oldPin = keypad.getInput();
+       if(!authenticateUser(userAccountNumber, oldPin)){
+            System.out.println("You Insert the Wrong Old PIN Number");
+           changePIN(userAccountNumber);
+       }
+         
+       int[] newPIN = new int[2];
+       
+       for (int i = 0;i<2;i++){
+           System.out.print("Insert New PIN : ");
+           newPIN[i] = keypad.getInput();
+       }
+       
+       if (newPIN[0] == newPIN[1]){
+           getAccount(userAccountNumber).changeThePIN(newPIN[1]);
+           System.out.println("Your PIN has been Changed");
+       }else{
+           System.out.println("You Insert the Wrong New PIN Number");
+           changePIN(userAccountNumber);
+       }
+           
+   }
+   
+   public void blockStatus( int accountNumber){
+       
+       Account acc = getAccount(accountNumber);
+       if(acc != null)
+        acc.setIsBlocked(true);
    }
    
    private Account getAccount(int accountNumber) {
       int i;
-      for (i = 0; i < 2; i++) {
+      for (i = 0; i < 5; i++) {
           if (accounts[i].getAccountNumber() == accountNumber) {
+              if (accounts[i].getIsBlocked() == true ){
+                  System.out.println("Your account is blocked !");
+                  return null;
+              }
               return accounts[i];
           }
       } 
