@@ -27,4 +27,13 @@ public class CashDispenser {
          return false; // not enough bills available
       }
    }
-} 
+   
+   public int getCount(){
+       return count;
+    }
+
+    void setCount(int temp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+}

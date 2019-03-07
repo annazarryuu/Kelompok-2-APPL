@@ -14,8 +14,9 @@ public class ATM {
    private static final int BALANCE_INQUIRY = 1;
    private static final int WITHDRAWAL = 2;
    private static final int DEPOSIT = 3;
-   private static final int TRANSFER = 4;
-   private static final int EXIT = 5;
+   private static final int CHANGEPIN = 4;
+   private static final int TRANSFER = 5;
+   private static final int EXIT = 6;
 
    // no-argument ATM constructor initializes instance variables
    public ATM() {
@@ -120,6 +121,10 @@ public class ATM {
                 
                 currentTransaction.execute();
                 break;
+            case CHANGEPIN:
+                bankDatabase = new BankDatabase();
+                bankDatabase.changePIN(currentAccountNumber);
+                break;
             case TRANSFER:
                 currentTransaction =
                         createTransaction(mainMenuSelection);
@@ -144,8 +149,9 @@ public class ATM {
       screen.displayMessageLine("1 - View my balance");
       screen.displayMessageLine("2 - Withdraw cash");
       screen.displayMessageLine("3 - Deposit funds");
-      screen.displayMessageLine("4 - Transfer");
-      screen.displayMessageLine("5 - Exit\n");
+      screen.displayMessageLine("4 - Change Password");
+      screen.displayMessageLine("5 - Transfer");
+      screen.displayMessageLine("6 - Exit\n");
       screen.displayMessage("Enter a choice: ");
       return keypad.getInput(); // return user's selection
    } 
