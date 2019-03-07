@@ -4,7 +4,7 @@ public class BankDatabase {
    private Account[] accounts; // array of Accounts
     Keypad keypad = new Keypad();
     Screen screen = new Screen();
-   
+    
    public BankDatabase() {
       accounts = new Account[5]; // just 2 accounts for testing
       accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false);
@@ -47,7 +47,7 @@ public class BankDatabase {
    
    private Account getAccount(int accountNumber) {
       int i;
-      for (i = 0; i < 2; i++) {
+      for (i = 0; i < 5; i++) {
           if (accounts[i].getAccountNumber() == accountNumber) {
               if (accounts[i].getIsBlocked() == true ){
                   System.out.println("Your account is blocked !");
