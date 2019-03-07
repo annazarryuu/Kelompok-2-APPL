@@ -175,7 +175,7 @@ public class ATM {
 //                 currentAccountNumber, screen, bankDatabase);
               break;
            case DEPOSIT_VALIDATION:
-//              temp = new ValidateDeposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
+              temp = new ValidateDeposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
               break;
         }                    
       }

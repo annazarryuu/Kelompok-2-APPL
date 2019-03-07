@@ -35,8 +35,8 @@ public class Account {
       return totalBalance;
    } 
    
-   public void setAvailableBalance(double newTotalBalance) {
-       totalBalance = newTotalBalance;
+   public void setAvailableBalance(double availableBalance) {
+       this.availableBalance = availableBalance;
    }
 
    public void credit(double amount) {
@@ -52,3 +52,12 @@ public class Account {
       return accountNumber;  
    }
 } 
+/*
+-> diwaktu luang belajar
+-> di kampus ujian
+
+minggu depan targetnya,
+testnya ; 
+
+
+*/

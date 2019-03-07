@@ -19,7 +19,7 @@ public class ValidateDeposit extends Deposit {
     
     @Override
     public void execute() {
-        BankDatabase bankDatabase = new BankDatabase();
+        BankDatabase bankDatabase = getBankDatabase();
         System.out.print("Input account number: ");
         int accNum = keypad.getInput();
         if(bankDatabase.depositValidated(accNum)) {
