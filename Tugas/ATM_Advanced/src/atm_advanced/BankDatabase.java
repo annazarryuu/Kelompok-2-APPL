@@ -2,23 +2,17 @@ package atm_advanced;
 
 public class BankDatabase {
    private Account[] accounts; // array of Accounts
-   
+   private int maxAccountCount = 50;
    public BankDatabase() {
-      accounts = new Account[2]; // just 2 accounts for testing
-      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false);
-      accounts[1] = new Account(8765, 5678, 200.0, 200.0, false);  
-   }
-   
-   public void blockStatus( int accountNumber){
-       
-       Account acc = getAccount(accountNumber);
-       if(acc != null)
-        acc.setIsBlocked(true);
+      accounts = new Account[maxAccountCount]; // just 2 accounts for testing
+      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0);
+      accounts[1] = new Account(8765, 5678, 200.0, 200.0);
+      accounts[2] = new Account(00000, 00000, 0.0, 0.0);
    }
    
    private Account getAccount(int accountNumber) {
       int i;
-      for (i = 0; i < 2; i++) {
+      for (i = 0; i < maxAccountCount; i++) {
           if (accounts[i].getAccountNumber() == accountNumber) {
               if (accounts[i].getIsBlocked() == true ){
                   System.out.println("Your account is blocked !");
