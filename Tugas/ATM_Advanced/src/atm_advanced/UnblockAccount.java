@@ -9,21 +9,18 @@ package atm_advanced;
  *
  * @author User
  */
-public class AddAccount extends Transaction {
+public class UnblockAccount extends Transaction {
     private Keypad keypad = new Keypad();
     
-    public AddAccount(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase) {
+    public UnblockAccount(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase) {
         super(userAccountNumber, atmScreen, atmBankDatabase);
     }
     
+    @Override
     public void execute() {
         BankDatabase bankDatabase = getBankDatabase();
-        
-        System.out.print("Insert new account number : ");
-        int newAccountNumber = keypad.getInput();
-        System.out.print("Inser new PIN : ");
-        int newPIN = keypad.getInput();
-        
-        bankDatabase.addAccount(newAccountNumber, newPIN);
+        System.out.print("Insert Account Number : ");
+        int input = keypad.getInput();
+        bankDatabase.unblockAccount(input);
     }
 }

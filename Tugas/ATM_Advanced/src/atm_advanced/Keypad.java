@@ -1,3 +1,5 @@
+package atm_advanced;
+
 import java.util.Scanner;
 
 public class Keypad {

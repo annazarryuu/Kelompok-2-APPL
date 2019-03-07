@@ -1,3 +1,5 @@
+package atm_advanced;
+
 public class BalanceInquiry extends Transaction {
    // BalanceInquiry constructor
    public BalanceInquiry(int userAccountNumber, Screen atmScreen, 

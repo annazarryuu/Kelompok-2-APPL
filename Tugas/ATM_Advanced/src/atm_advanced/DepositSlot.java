@@ -1,3 +1,5 @@
+package atm_advanced;
+
 public class DepositSlot {
 
    public boolean isEnvelopeReceived() {

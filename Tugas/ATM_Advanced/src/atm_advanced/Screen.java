@@ -1,3 +1,5 @@
+package atm_advanced;
+
 public class Screen {
    // display a message without a carriage return
    public void displayMessage(String message) {
