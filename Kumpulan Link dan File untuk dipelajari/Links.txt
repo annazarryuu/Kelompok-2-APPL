@@ -11,6 +11,7 @@ MVC :
 - https://www.youtube.com/watch?v=pCvZtjoRq1I
 - https://stackoverflow.com/questions/1904115/mvc-on-the-command-line
 - https://github.com/rankinjl/hangman-gui-tui
+- https://www.youtube.com/watch?v=dTVVa2gfht8
 
 Test Automation :
 - https://en.wikipedia.org/wiki/Test_automation
