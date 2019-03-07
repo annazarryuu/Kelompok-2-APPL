@@ -1,31 +1,16 @@
-package atm_advanced;
-
 public class BankDatabase {
    private Account[] accounts; // array of Accounts
-   private int maxAccountCount = 50;
-   public BankDatabase() {
-      accounts = new Account[maxAccountCount]; // just 2 accounts for testing
-      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false);
-      accounts[1] = new Account(8765, 5678, 200.0, 200.0, false);
-      accounts[2] = new Account(00000, 00000, 0.0, 0.0, false);
-
-   }
    
-   public void blockStatus(int accountNumber){
-       
-       Account acc = getAccount(accountNumber);
-       if(acc != null)
-        acc.setIsBlocked(true);
+   public BankDatabase() {
+      accounts = new Account[2]; // just 2 accounts for testing
+      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0);
+      accounts[1] = new Account(8765, 5678, 200.0, 200.0);  
    }
    
    private Account getAccount(int accountNumber) {
       int i;
-      for (i = 0; i < maxAccountCount; i++) {
+      for (i = 0; i < accounts.length; i++) {
           if (accounts[i].getAccountNumber() == accountNumber) {
-              if (accounts[i].getIsBlocked() == true ){
-                  System.out.println("Your account is blocked !");
-                  return null;
-              }
               return accounts[i];
           }
       } 
@@ -44,17 +29,6 @@ public class BankDatabase {
          return false; // account number not found, so return false
       }
    } 
-   
-   public boolean depositValidated(int userAccountNumber) {
-       Account userAccount = getAccount(userAccountNumber);
-       
-       if(userAccount != null) {
-           userAccount.setAvailableBalance(userAccount.getTotalBalance());
-           return true;
-       } else {
-           return false;
-       }
-   }
 
    public double getAvailableBalance(int userAccountNumber) {
       return getAccount(userAccountNumber).getAvailableBalance();
@@ -71,4 +45,9 @@ public class BankDatabase {
    public void debit(int userAccountNumber, double amount) {
       getAccount(userAccountNumber).debit(amount);
    } 
+   
+   public void addAccount(int userAccountNumber, int userPIN) {
+       int length = accounts.length;
+       accounts[length+1] = new Account(userAccountNumber, userPIN, 0, 0, false);
+   }
 } 

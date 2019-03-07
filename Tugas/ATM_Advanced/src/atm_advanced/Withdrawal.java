@@ -1,5 +1,3 @@
-package atm_advanced;
-
 // Withdrawal.java
 // Represents a withdrawal ATM transaction
 
@@ -12,26 +10,22 @@ public class Withdrawal extends Transaction {
    private final static int CANCELED = 6;
 
    // Withdrawal constructor
-   public Withdrawal(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase, Keypad atmKeypad, CashDispenser atmCashDispenser) {
+   public Withdrawal(int userAccountNumber, Screen atmScreen, 
+      BankDatabase atmBankDatabase, Keypad atmKeypad, 
+      CashDispenser atmCashDispenser) {
+
       // initialize superclass variables
-        super(userAccountNumber, atmScreen, atmBankDatabase);      
-        cashDispenser = atmCashDispenser;
+      super(userAccountNumber, atmScreen, atmBankDatabase);
+      
    }
 
    // perform transaction
-
    @Override
    public void execute() {
-       Screen screen = getScreen();
        BankDatabase bankDatabase = getBankDatabase();
+       
        amount = displayMenuOfAmounts();
-       if(cashDispenser.isSufficientCashAvailable(amount)){
-            bankDatabase.debit(getAccountNumber(), amount); //kurangi saldo dari akun
-            cashDispenser.dispenseCash(amount); //kurangi uang yang ada di dispensers
-            screen.displayMessageLine("Your cash has been dispensed. Please take your cash now.");
-       } else {
-            screen.displayMessageLine("There's not enough cash in the dispenser!");
-       }      
+       bankDatabase.debit(getAccountNumber(), amount);
    } 
 
    // display a menu of withdrawal amounts and the option to cancel;
@@ -66,6 +60,7 @@ public class Withdrawal extends Transaction {
             case 4:
             case 5:
                userChoice = amounts[input]; // save user's choice
+               System.out.println("Your cash has been dispensed. Please take your cash now.");
                break;       
             case CANCELED: // the user chose to cancel
                userChoice = CANCELED; // save user's choice

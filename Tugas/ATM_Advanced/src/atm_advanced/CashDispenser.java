@@ -1,8 +1,6 @@
-package atm_advanced;
-
 public class CashDispenser {
    // the default initial number of bills in the cash dispenser
-   private final static int INITIAL_COUNT = 10;
+   private final static int INITIAL_COUNT = 500;
    private int count; // number of $20 bills remaining
    
    // no-argument CashDispenser constructor initializes count to default
@@ -27,14 +25,4 @@ public class CashDispenser {
          return false; // not enough bills available
       }
    }
-   
-    public int getCountCash(){
-       return count;
-    }
-    
-    public void addCountCash(int count){
-        this.count += count;
-    }
-
-    
-}
+} 

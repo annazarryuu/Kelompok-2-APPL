@@ -1,5 +1,3 @@
-package atm_advanced;
-
 public class Deposit extends Transaction {
    private double amount; // amount to deposit
    private Keypad keypad = new Keypad(); // reference to keypad
@@ -20,17 +18,15 @@ public class Deposit extends Transaction {
    @Override
    public void execute() {
        BankDatabase bankDatabase = getBankDatabase();
-       amount = promptForDepositAmount();
-       int PIN = 0;
        
+       amount = promptForDepositAmount();
        bankDatabase.credit(getAccountNumber(), amount);
        System.out.println("Please insert a deposit envelope containing $" + amount);
        System.out.println();
        System.out.println("Your envelope has been received.");
        System.out.println("NOTE: The money just deposited will not be available until we verify the amount of any enclosed cash and your checks clear.");
-       System.out.println("");
    }
-   
+
    // prompt user to enter a deposit amount in cents 
    private double promptForDepositAmount() {
       Screen screen = getScreen(); // get reference to screen
