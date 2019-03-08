@@ -8,23 +8,7 @@ public class ATM {
     private Keypad keypad; // ATM's keypad
     private CashDispenser cashDispenser; // ATM's cash dispenser
     private DepositSlot depositSlot;
-
-   // start ATM 
-   public void run() {
-      // welcome and authenticate user; perform transactions
-      while (true) {
-         // loop while user is not yet authenticated
-         while (!userAuthenticated) {
-            screen.displayMessageLine("\nWelcome!");       
-            authenticateUser(); // authenticate user
-         }
-             
-         performTransactions(); // user is now authenticated
-         userAuthenticated = false; // reset before next ATM session
-         currentAccountNumber = 0; // reset before next ATM session
-         screen.displayMessageLine("\nThank you! Goodbye!");
-      }
-   }
+    
     private BankDatabase bankDatabase; // account information database
 
     private boolean isAdmin = false;
