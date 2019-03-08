@@ -22,7 +22,7 @@ public class BankDatabase {
    
    private Account getAccount(int accountNumber) {
       int i;
-      for (i = 0; i < maxAccountCount; i++) {
+      for (i = 0; i < current_account_count; i++) {
           if (accounts[i].getAccountNumber() == accountNumber) {
               if (accounts[i].getIsBlocked() == true ){
                   System.out.println("Your account is blocked !");
@@ -36,14 +36,23 @@ public class BankDatabase {
    
    private Account getAccountByAdmin(int accountNumber) {
       int i;
-      for (i = 0; i < maxAccountCount; i++) {
+      for (i = 0; i < current_account_count; i++) {
           if (accounts[i].getAccountNumber() == accountNumber) {
               return accounts[i];
           }
       } 
       return null; // if no matching account was found, return null
    } 
-
+   
+   public boolean validateAccount(int accountNumber) {
+      int i;
+      for (i = 0; i < current_account_count; i++) {
+          if (accounts[i].getAccountNumber() == accountNumber) {
+              return true;
+          }
+      } 
+      return false; // if no matching account was found, return null
+   } 
    
    public boolean authenticateUser(int userAccountNumber, int userPIN) {
       // attempt to retrieve the account with the account number
