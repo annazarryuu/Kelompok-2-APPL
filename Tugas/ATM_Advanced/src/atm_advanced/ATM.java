@@ -83,7 +83,6 @@ public class ATM {
            userAuthenticated = bankDatabase.authenticateUser(accountNumber, pin);
            // check whether authentication succeeded
            if (userAuthenticated) {
-//               isAdmin = isAdmin(accountNumber, pin);
                currentAccountNumber = accountNumber; // save user's account #
            } else {
               screen.displayMessageLine("Invalid account number or PIN. Please try again.");
@@ -96,15 +95,6 @@ public class ATM {
            screen.displayMessageLine("You tried 3 times, Your account is blocked!");
        }
    }
-   
-   private boolean isAdmin(int userAccountNumber, int userPIN) {
-      // set userAuthenticated to boolean value returned by database
-      if(userAccountNumber == 00000){
-          return true;
-      } else {
-          return false;
-      }
-   } 
 
    // display the main menu and perform transactions
    private void performTransactions() {
@@ -122,11 +112,9 @@ public class ATM {
          switch (mainMenuSelection) {
             // user chose to perform one of three transaction types
             case BALANCE_INQUIRY:         
-
                // initialize as new object of chosen type
                currentTransaction = 
                   createTransaction(mainMenuSelection);
-
                currentTransaction.execute(); // execute transaction
                break;
             case WITHDRAWAL:
@@ -147,6 +135,34 @@ public class ATM {
                 currentTransaction =
                         createTransaction(mainMenuSelection);
                 
+                currentTransaction.execute();
+                break;
+            case UNBLOCK_NASABAH:         
+               // initialize as new object of chosen type
+               currentTransaction = 
+                  createTransaction(mainMenuSelection);
+
+               currentTransaction.execute(); // execute transaction
+               break;
+            case CHECK_DISPENSER_MONEY:
+                currentTransaction =
+                        createTransaction(mainMenuSelection);
+                
+                currentTransaction.execute();
+                break;
+            case ADD_DISPENSER_MONEY:
+                currentTransaction =
+                        createTransaction(mainMenuSelection);
+                currentTransaction.execute();
+                break;
+            case ADD_NASABAH:
+                currentTransaction =
+                        createTransaction(mainMenuSelection);
+                currentTransaction.execute();
+                break;
+            case DEPOSIT_VALIDATION:
+                currentTransaction =
+                        createTransaction(mainMenuSelection);
                 currentTransaction.execute();
                 break;
             case EXIT: // user chose to terminate session
@@ -192,11 +208,15 @@ public class ATM {
                 }                
             }
         }
-        for(int i = 0; i < j; i++){
-            screen.displayMessage(String.valueOf(menuPilihan[arrayNoPilihan[i]].getNoPilihan()));
+        for(int i = 0; i < j-1; i++){
+            screen.displayMessage(String.valueOf(i+1));
             screen.displayMessage(". ");
             screen.displayMessage(menuPilihan[arrayNoPilihan[i]].getketeranganPilihan() + "\n");
         }
+        screen.displayMessage(String.valueOf(j));
+        screen.displayMessage(". ");
+        screen.displayMessageLine(menuPilihan[10].getketeranganPilihan());
+        
         screen.displayMessage("Enter a choice: ");
         int userInput =  keypad.getInput(); // return user's selection
         
@@ -205,7 +225,6 @@ public class ATM {
          
    private Transaction createTransaction(int type) {
       Transaction temp = null; 
-      if(!isAdmin){
         switch (type) {
            case BALANCE_INQUIRY: 
               temp = new BalanceInquiry(
@@ -220,9 +239,6 @@ public class ATM {
             case TRANSFER:
              temp = new Transfer(currentAccountNumber, screen, keypad, bankDatabase );
             break;
-        }          
-      } else {
-          switch (type) {
            case UNBLOCK_NASABAH: 
               temp = new UnblockAccount(currentAccountNumber, screen, bankDatabase);
               break;
@@ -237,89 +253,18 @@ public class ATM {
               break;
            case DEPOSIT_VALIDATION:
               temp = new ValidateDeposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
-              break;
-        }                    
+              break;               
       }
 
       return temp;
-   } 
-
-    private void performTransactionsAdmin() {
-      Transaction currentTransaction = null;
-      
-      boolean userExited = false; // user has not chosen to exit
-      
-      // loop while user has not chosen option to exit system
-      while (!userExited) {
-         // show main menu and get user selection
-         int mainMenuSelection = displayMainMenuAdmin();
-
-         // decide how to proceed based on user's menu selection
-         switch (mainMenuSelection) {
-            // user chose to perform one of three transaction types
-            case UNBLOCK_NASABAH:         
-
-               // initialize as new object of chosen type
-               currentTransaction = 
-                  createTransaction(mainMenuSelection);
-
-               currentTransaction.execute(); // execute transaction
-               break;
-            case CHECK_DISPENSER_MONEY:
-                currentTransaction =
-                        createTransaction(mainMenuSelection);
-                
-                currentTransaction.execute();
-                break;
-            case ADD_DISPENSER_MONEY:
-                currentTransaction =
-                        createTransaction(mainMenuSelection);
-                
-                currentTransaction.execute();
-                break;
-            case ADD_NASABAH:
-                currentTransaction =
-                        createTransaction(mainMenuSelection);
-                
-                currentTransaction.execute();
-                break;
-            case DEPOSIT_VALIDATION:
-                currentTransaction =
-                        createTransaction(mainMenuSelection);
-                
-                currentTransaction.execute();
-                break;
-//            case EXITADMIN: // user chose to terminate session
-//               screen.displayMessageLine("\nExiting the system...");
-//               userExited = true; // this ATM session should end
-//               break;
-            default: // 
-               screen.displayMessageLine(
-                  "\nYou did not enter a valid selection. Try again.");
-               break;
-         }
-      } 
-
-    }
-
-    private int displayMainMenuAdmin() {
-      screen.displayMessageLine("\nMain menu:");
-      screen.displayMessageLine("1 - Unblock Nasabah");
-      screen.displayMessageLine("2 - Lihat uang di dispenser");
-      screen.displayMessageLine("3 - Tambah uang di dispenser");
-      screen.displayMessageLine("4 - Tambah nasabah");
-      screen.displayMessageLine("5 - Validasi deposit");
-      screen.displayMessageLine("6 - Exit\n");
-      screen.displayMessage("Enter a choice: ");
-      return keypad.getInput(); // return user's selection
-    }
-
+   }
+   
     private void initiatePilihan(){
         menuPilihan = new Menu[JUMLAH_PILIHAN];
         menuPilihan[0] = new Menu(BALANCE_INQUIRY, "View my balance", false, true, true, true);
         menuPilihan[1] = new Menu(WITHDRAWAL, "Withdraw cash", false, true, true, true);
         menuPilihan[2] = new Menu(DEPOSIT, "Deposit funds", false, true, true, true);
-        menuPilihan[3] = new Menu(TRANSFER, "Transfer", false, true, true, true);
+        menuPilihan[3] = new Menu(TRANSFER, "Transfer", false, false, true, true);
         menuPilihan[4] = new Menu(UNBLOCK_NASABAH, "Unblock account", true, false, false, false);
         menuPilihan[5] = new Menu(CHECK_DISPENSER_MONEY, "Check amout of cash in dispenser", true, false, false, false);
         menuPilihan[6] = new Menu(ADD_DISPENSER_MONEY, "Add amount of cash in dispenser", true, false, false, false);
