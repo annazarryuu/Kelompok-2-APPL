@@ -183,42 +183,40 @@ public class ATM {
             if(tempAccount.getAccType() == 0){
                 if(menuPilihan[i].getForAdmin() == true){
                     arrayPilihan[j] = menuPilihan[i].getketeranganPilihan();
-                    arrayNoPilihan[i] = i;
+                    arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
                     j++;
                 }
             } else if(tempAccount.getAccType() == 1){
                 if(menuPilihan[i].getForSiswa() == true){
                     arrayPilihan[j] = menuPilihan[i].getketeranganPilihan();
-                    arrayNoPilihan[i] = i;
+                    arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
                     j++;
-                }                
+                }
             } else if(tempAccount.getAccType() == 2){
                 if(menuPilihan[i].getForBisnis() == true){
                     arrayPilihan[j] = menuPilihan[i].getketeranganPilihan();
-                    arrayNoPilihan[i] = i;
+                    arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
                     j++;
-                }                
+                }
             } else if(tempAccount.getAccType() == 3){
                 if(menuPilihan[i].getForBisnis() == true){
                     arrayPilihan[j] = menuPilihan[i].getketeranganPilihan();
-                    arrayNoPilihan[i] = i;
+                    arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
                     j++;
-                }                
+                }
             }
         }
+        arrayNoPilihan[j] = 10; j++;
         for(int i = 0; i < j-1; i++){
             screen.displayMessage(String.valueOf(i+1));
             screen.displayMessage(". ");
-            screen.displayMessage(menuPilihan[arrayNoPilihan[i]].getketeranganPilihan() + "\n");
+            screen.displayMessage(menuPilihan[arrayNoPilihan[i]-1].getketeranganPilihan() + "\n");
         }
-        screen.displayMessage(String.valueOf(j));
-        screen.displayMessage(". ");
-        screen.displayMessageLine(menuPilihan[10].getketeranganPilihan());
         
         screen.displayMessage("Enter a choice: ");
         int userInput =  keypad.getInput(); // return user's selection
         
-        return 0;
+        return arrayNoPilihan[userInput-1];
    } 
          
    private Transaction createTransaction(int type) {
