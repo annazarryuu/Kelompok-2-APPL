@@ -60,6 +60,11 @@ public class Account {
    public int getAccountNumber() {
       return accountNumber;  
    }
+   
+   public void monthlyPayment()
+   {
+       
+   }
 
 } 
 /*

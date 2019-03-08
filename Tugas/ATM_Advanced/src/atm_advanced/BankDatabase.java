@@ -106,4 +106,12 @@ public class BankDatabase {
            current_account_count++;
         }
    }
+   
+   public void monthlyPayment()
+   {
+       for (int i = 0; i < current_account_count; i++)
+       {
+	   accounts[i].monthlyPayment();
+       }
+   }
 } 

@@ -13,13 +13,18 @@ import java.util.Date;
  */
 public class SystemDate {
     
-    private Date prevDate;
-    private Date currDate;
+    private static Date prevDate;
+    private static Date currDate;
+    private static BankDatabase bankDatabase; 
     
-    public SystemDate()
+    public SystemDate(BankDatabase theBankDatabase)
     {
-	prevDate = new Date(System.currentTimeMillis());
-	currDate = new Date(System.currentTimeMillis());
+	if(prevDate == null)
+	    prevDate = new Date(System.currentTimeMillis());
+	if(currDate == null)
+	    currDate = new Date(System.currentTimeMillis());
+	if(bankDatabase == null)
+	    bankDatabase = theBankDatabase;
     }
 
     /**
@@ -50,6 +55,19 @@ public class SystemDate {
 	this.currDate = currDate;
     }
     
-    
+    public void dateCheck()
+    {
+	if(currDate.getYear() > prevDate.getYear() - 1)
+	{
+	    if(currDate.getMonth() > prevDate.getMonth())
+	    {
+		if(currDate.getDate() > 2)
+		{
+		    bankDatabase.monthlyPayment();
+		    prevDate = currDate;
+		}
+	    }
+	}
+    }
     
 }
