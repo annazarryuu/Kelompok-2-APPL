@@ -1,0 +1,19 @@
+Git :
+- https://stackoverflow.com/questions/5064563/add-line-break-to-git-commit-m-from-the-command-line
+
+Code Coverage :
+- http://users.csc.calpoly.edu/~jdalbey/SWE/Tools/NetBeansCodeCoveragePlugin.html
+- http://wiki.netbeans.org/TutorialCodeCoveragePlugin
+- https://en.wikipedia.org/wiki/Java_code_coverage_tools
+
+MVC :
+- https://www.youtube.com/watch?v=TuH_lqeDnUc
+- https://www.youtube.com/watch?v=pCvZtjoRq1I
+- https://stackoverflow.com/questions/1904115/mvc-on-the-command-line
+- https://github.com/rankinjl/hangman-gui-tui
+- https://www.youtube.com/watch?v=dTVVa2gfht8
+
+Test Automation :
+- https://en.wikipedia.org/wiki/Test_automation
+- https://github.com/nathanielove/Java-Console-View
+- https://www.softwaretestinghelp.com/java-testing-tools
