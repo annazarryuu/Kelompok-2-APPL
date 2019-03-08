@@ -85,6 +85,11 @@ public class BankDatabase {
    public double getTotalBalance(int userAccountNumber) {
       return getAccount(userAccountNumber).getTotalBalance();
    } 
+   
+   public double getTransferTax(int userAccountNumber)
+   {
+       return getAccount(userAccountNumber).getTransferTax();
+   }
 
    public void credit(int userAccountNumber, double amount) {
       getAccount(userAccountNumber).credit(amount);

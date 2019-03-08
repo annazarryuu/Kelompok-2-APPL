@@ -55,6 +55,7 @@ public Transfer( int accountNumber, Screen screen, Keypad keypadn, BankDatabase 
       do {
         screen.displayMessage("Input transfer amount : ");
         amounts = keypad.getInput();
+	amounts = amounts + (int)getBankDatabase().getTransferTax(getAccountNumber());
         if (amounts < 0) {
             screen.displayMessage("Yeah, go F7ck your self!\n");
         }
