@@ -25,7 +25,7 @@ public class Withdrawal extends Transaction {
        Screen screen = getScreen();
        BankDatabase bankDatabase = getBankDatabase();
        amount = displayMenuOfAmounts(bankDatabase);
-       if( cashDispenser.isSufficientCashAvailable(amount) ){
+       if( cashDispenser.isSufficientCashAvailable(amount) && amount != 6 ){
             bankDatabase.debit(getAccountNumber(), amount); //kurangi saldo dari akun
             cashDispenser.dispenseCash(amount); //kurangi uang yang ada di dispensers
             screen.displayMessageLine("Your cash has been dispensed. Please take your cash now.");
@@ -66,7 +66,7 @@ public class Withdrawal extends Transaction {
             } else if ( amounts[input] > bankDatabase.getAvailableBalance(super.getAccountNumber()) ) {
                 validator = false;
                 screen.displayMessage("You don't have that much money lol!\n");
-            } else if ( !bankDatabase.withdraw(super.getAccountNumber(), amount) ) {
+            } else if ( !bankDatabase.withdraw(super.getAccountNumber(), amounts[input]) ) {
                 validator = false;
             } else {
                 validator = true;

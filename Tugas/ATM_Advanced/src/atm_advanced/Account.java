@@ -23,7 +23,7 @@ public class Account {
       totalBalance = theTotalBalance;
       isBlocked = status;
       this.accType = accType;
-      setLimit(accType);
+      setLimit();
    }
 
    // determines whether a user-specified PIN matches PIN in Account
@@ -70,8 +70,8 @@ public class Account {
       return accountNumber;  
    }
    
-   private void setLimit(int type) {
-       switch (type) {
+   private void setLimit() {
+       switch (accType) {
            case ADMIN:
                withdrawLimit = 0;
                transferLimit = 0;

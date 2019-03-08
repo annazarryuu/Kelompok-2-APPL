@@ -8,7 +8,7 @@ public class BankDatabase {
    public BankDatabase() {
       accounts = new Account[maxAccountCount]; // just 2 accounts for testing
       accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false, 1);
-      accounts[1] = new Account(8765, 5678, 200.0, 200.0, false, 2);
+      accounts[1] = new Account(8765, 5678, 80.0, 700.0, false, 2);
       accounts[2] = new Account(00000, 00000, 0.0, 0.0, false, 3);
       current_account_count = INITIAL_ACCOUNT_COUNT; //jumlah akun pertama-tama diisi INITITAL_ACCOUNT_COUNT
    }
@@ -102,7 +102,7 @@ public class BankDatabase {
             System.out.println("You can`t add new account because the database is full.");
         } else {
            System.out.println("Account successfully created.");
-           accounts[current_account_count] = new Account(userAccountNumber, userPIN, 0, 0, false, 1);        
+           accounts[current_account_count] = new Account(userAccountNumber, userPIN, 0, 0, false, accType);        
            current_account_count++;
         }
    }

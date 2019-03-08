@@ -58,10 +58,10 @@ public Transfer( int accountNumber, Screen screen, Keypad keypadn, BankDatabase 
         if (amounts < 0) {
             validator = false;
             screen.displayMessage("Yeah, go F7ck your self!\n");
-        } else if ( amounts > bankDatabase.getAvailableBalance(targetAccount) ) {
+        } else if ( amounts >= bankDatabase.getAvailableBalance(super.getAccountNumber()) ) {
             validator = false;
             screen.displayMessage("You're too poor to do that!\n");            
-        } else if ( !bankDatabase.transfer(targetAccount, amounts) ) {
+        } else if ( !bankDatabase.transfer(super.getAccountNumber(), amounts) ) {
             validator = false;
         } else {
             validator = true;
