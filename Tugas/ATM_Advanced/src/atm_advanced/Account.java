@@ -3,7 +3,7 @@ package atm_advanced;
 public class Account {
    private int accountNumber; // account number
    private int pin; // PIN for authentication
-   private double availableBalance; // funds available for withdrawal
+   double availableBalance; // funds available for withdrawal
    private double totalBalance; // funds available & pending deposits
    private boolean isBlocked; //Status Nasabah
 
@@ -35,7 +35,6 @@ public class Account {
    public void setIsBlocked(boolean newStatus){
        isBlocked = newStatus ;
    }
-   
    public boolean getIsBlocked(){
        return isBlocked;
    }
@@ -44,6 +43,10 @@ public class Account {
    public double getTotalBalance() {
       return totalBalance;
    } 
+   
+   public void setAvailableBalance(double availableBalance) {
+       this.availableBalance = availableBalance;
+   }
 
    public void credit(double amount) {
        totalBalance += amount;
@@ -57,8 +60,14 @@ public class Account {
    public int getAccountNumber() {
       return accountNumber;  
    }
-   
-    public void changeThePIN(int newPin){
-       pin = newPin;
-   }
+
 } 
+/*
+-> diwaktu luang belajar
+-> di kampus ujian
+
+minggu depan targetnya,
+testnya ; 
+
+
+*/

@@ -28,12 +28,13 @@ public class CashDispenser {
       }
    }
    
-   public int getCount(){
+    public int getCountCash(){
        return count;
     }
-
-    void setCount(int temp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public void addCountCash(int count){
+        this.count += count;
     }
 
+    
 }

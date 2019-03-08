@@ -24,20 +24,42 @@ public Transfer( int accountNumber, Screen screen, Keypad keypadn, BankDatabase 
  public void execute(){
     BankDatabase bankDatabase = getBankDatabase();
     
-    displayMenuOfAmounts();
-    bankDatabase.debit(targetAccount, amounts*-1);
-    bankDatabase.debit(getAccountNumber(), amounts);
- }
+    displayMenuOfAmounts(bankDatabase);
+    if (amounts != 0) {
+        bankDatabase.debit(targetAccount, amounts*-1);
+        bankDatabase.debit(getAccountNumber(), amounts);
+    }
+}
 
-  private int displayMenuOfAmounts() {
+  private int displayMenuOfAmounts(BankDatabase bankDatabase) {
       
       Screen screen = getScreen();
+      boolean validator;
+              
+      screen.displayMessage("Transfer Menu\n");
       
-      screen.displayMessage("Transfer Menu");
-      screen.displayMessage("Input your target account number : ");
-      targetAccount = keypad.getInput();
-      screen.displayMessage("Input transfer amount : ");
-      amounts = keypad.getInput();
+      do {
+        screen.displayMessage("Input your target account number : ");
+        targetAccount = keypad.getInput();
+        if (targetAccount == super.getAccountNumber()) {
+            validator = false;
+            screen.displayMessage("\"Your Target\" not \"Your\" account number! \nIf you want to deposit money into your account, use the deposit option.\n");
+        } else if ( !bankDatabase.validateAccount(targetAccount) ) {
+            validator = false;
+            screen.displayMessage("Is that person exist in your head? Sorry, but he's not real.\n");
+        } else {
+            validator = true;
+        }
+      } while ( !validator );
+      
+      do {
+        screen.displayMessage("Input transfer amount : ");
+        amounts = keypad.getInput();
+        if (amounts < 0) {
+            screen.displayMessage("Yeah, go F7ck your self!\n");
+        }
+      } while (amounts < 0);
+      
       return 0;
       
    }
