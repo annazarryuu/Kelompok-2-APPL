@@ -1,82 +1,99 @@
 package atm_advanced;
 
 public class ATM {
-   private boolean userAuthenticated; // whether user is authenticated
-   private int currentAccountNumber; // current user's account number
-   private Screen screen; // ATM's screen
-   private Keypad keypad; // ATM's keypad
-   private CashDispenser cashDispenser; // ATM's cash dispenser
-   private DepositSlot depositSlot;
+//<<<<<<< HEAD
+    private boolean userAuthenticated; // whether user is authenticated
+    private int currentAccountNumber; // current user's account number
+    private Screen screen; // ATM's screen
+    private Keypad keypad; // ATM's keypad
+    private CashDispenser cashDispenser; // ATM's cash dispenser
+    private DepositSlot depositSlot;
 
-   private BankDatabase bankDatabase; // account information database
+    private BankDatabase bankDatabase; // account information database
 
-   private boolean isAdmin = false;
-   // constants corresponding to main menu options
-   private static final int BALANCE_INQUIRY = 1;
-   private static final int WITHDRAWAL = 2;
-   private static final int DEPOSIT = 3;
-   private static final int TRANSFER = 4;
-   private static final int EXIT = 5;
+    private boolean isAdmin = false;
+    // constants corresponding to main menu options
+    private static final int BALANCE_INQUIRY = 1;
+    private static final int WITHDRAWAL = 2;
+    private static final int DEPOSIT = 3;
+    private static final int TRANSFER = 4;
+    private static final int EXIT = 5;
 
-   private static final int UNBLOCK_NASABAH = 1;
-   private static final int CHECK_DISPENSER_MONEY = 2;
-   private static final int ADD_DISPENSER_MONEY = 3;
-   private static final int ADD_NASABAH = 4;
-   private static final int DEPOSIT_VALIDATION = 5;
-   private static final int EXITADMIN = 6;
+    private static final int UNBLOCK_NASABAH = 1;
+    private static final int CHECK_DISPENSER_MONEY = 2;
+    private static final int ADD_DISPENSER_MONEY = 3;
+    private static final int ADD_NASABAH = 4;
+    private static final int DEPOSIT_VALIDATION = 5;
+    private static final int EXITADMIN = 6;
 
-   // no-argument ATM constructor initializes instance variables
-   public ATM() {
-      userAuthenticated = false; // user is not authenticated to start
-      currentAccountNumber = 0; // no current account number to start
-      screen = new Screen(); // create screen
-      keypad = new Keypad(); // create keypad 
-      cashDispenser = new CashDispenser(); // create cash dispenser
-      bankDatabase = new BankDatabase(); // create acct info database
-   }
+    // no-argument ATM constructor initializes instance variables
+    public ATM() {
+        userAuthenticated = false; // user is not authenticated to start
+        currentAccountNumber = 0; // no current account number to start
+        screen = new Screen(); // create screen
+        keypad = new Keypad(); // create keypad 
+        cashDispenser = new CashDispenser(); // create cash dispenser
+        bankDatabase = new BankDatabase(); // create acct info database
+    }
 
-   // start ATM 
-   public void run() {
-      // welcome and authenticate user; perform transactions
-      while (true) {
-         // loop while user is not yet authenticated
-         
-         while (!userAuthenticated) {
-             
-            screen.displayMessageLine("\nWelcome!");       
-            authenticateUser(); // authenticate user
-         }
-         if(!isAdmin){
-             performTransactions(); // user is now authenticated         
-         } else {
-             performTransactionsAdmin(); // user is now authenticated                      
-         }
-         userAuthenticated = false; // reset before next ATM session
-         currentAccountNumber = 0; // reset before next ATM session
-         screen.displayMessageLine("\nThank you! Goodbye!");
+
+    
+    // start ATM 
+    public void run() {
+    // welcome and authenticate user; perform transactions
+        while (true) {
+        // loop while user is not yet authenticated
+            while (!userAuthenticated) {
+                screen.displayMessageLine("\nWelcome!");       
+                authenticateUser(); // authenticate user
+            }
+            if(!isAdmin){
+                performTransactions(); // user is now authenticated         
+            } else {
+                performTransactionsAdmin(); // user is now authenticated                      
+            }
+            userAuthenticated = false; // reset before next ATM session
+            currentAccountNumber = 0; // reset before next ATM session
+            screen.displayMessageLine("\nThank you! Goodbye!");
         }
-   }
-   
+    }
+    
    // attempts to authenticate user against database
    private void authenticateUser() {
-      screen.displayMessage("\nPlease enter your account number: ");
-      int accountNumber = keypad.getInput(); // input account number
-      screen.displayMessage("\nEnter your PIN: "); // prompt for PIN
-      int pin = keypad.getInput(); // input PIN
-      
-      // set userAuthenticated to boolean value returned by database
-      userAuthenticated = 
-         bankDatabase.authenticateUser(accountNumber, pin);
-      // check whether authentication succeeded
-      if (userAuthenticated) {
-          isAdmin = isAdmin(accountNumber, pin);
-          currentAccountNumber = accountNumber; // save user's account #
-      } 
-      else {
-         screen.displayMessageLine(
-            "Invalid account number or PIN. Please try again.");
-      } 
-   } 
+       int count = 0;
+       
+       while(!userAuthenticated && count < 3)
+       {
+           screen.displayMessage("\nPlease enter your account number: ");
+           int accountNumber = keypad.getInput(); // input account number
+           screen.displayMessage("\nEnter your PIN: "); // prompt for PIN
+           int pin = keypad.getInput(); // input PIN
+
+            if(currentAccountNumber != accountNumber)
+            {
+                currentAccountNumber = accountNumber;
+                count = 0;
+            }
+            
+           // set userAuthenticated to boolean value returned by database
+           userAuthenticated = bankDatabase.authenticateUser(accountNumber, pin);
+           // check whether authentication succeeded
+           if (userAuthenticated) {
+               isAdmin = isAdmin(accountNumber, pin);
+               currentAccountNumber = accountNumber; // save user's account #
+           } else {
+              screen.displayMessageLine(
+                 "Invalid account number or PIN. Please try again.");
+               count++;              
+           }
+       }
+       if(count == 3 && !userAuthenticated && currentAccountNumber != 0) //admin gak diblock
+       {
+           bankDatabase.blockStatus(currentAccountNumber);
+           screen.displayMessageLine("You tried 3 times, Your account is blocked!");
+       }
+   }
+   
    private boolean isAdmin(int userAccountNumber, int userPIN) {
       // set userAuthenticated to boolean value returned by database
       if(userAccountNumber == 00000){
@@ -165,27 +182,26 @@ public class ATM {
            case DEPOSIT:
               temp = new Deposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
               break;
+            case TRANSFER:
+             temp = new Transfer(currentAccountNumber, screen, keypad, bankDatabase );
+            break;
         }          
       } else {
           switch (type) {
            case UNBLOCK_NASABAH: 
-//              temp = new ManageClient(
-//                 currentAccountNumber, screen, bankDatabase);
+              temp = new UnblockAccount(currentAccountNumber, screen, bankDatabase);
               break;
            case CHECK_DISPENSER_MONEY:
-//              temp = new ManageDispenser(
-//                 currentAccountNumber, screen, bankDatabase);
+              temp = new seeAvailableCashDispenser(currentAccountNumber, screen, bankDatabase, cashDispenser);
               break;
            case ADD_DISPENSER_MONEY:
-//              temp = new ManageDispenser(
-//                 currentAccountNumber, screen, bankDatabase);
+              temp = new depositCashDispenser(currentAccountNumber, screen, bankDatabase, cashDispenser);
               break;
            case ADD_NASABAH:
-//              temp = new ManageClient(
-//                 currentAccountNumber, screen, bankDatabase);
+              temp = new AddAccount(currentAccountNumber, screen, bankDatabase);
               break;
            case DEPOSIT_VALIDATION:
-//              temp = new ValidateDeposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
+              temp = new ValidateDeposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
               break;
         }                    
       }
