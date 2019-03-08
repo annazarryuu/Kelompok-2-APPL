@@ -66,6 +66,8 @@ public class Withdrawal extends Transaction {
             } else if ( amounts[input] > bankDatabase.getAvailableBalance(super.getAccountNumber()) ) {
                 validator = false;
                 screen.displayMessage("You don't have that much money lol!\n");
+            } else if ( !bankDatabase.withdraw(super.getAccountNumber(), amount) ) {
+                validator = false;
             } else {
                 validator = true;
             }
