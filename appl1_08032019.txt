@@ -1,0 +1,54 @@
+Selamat Pagi,
+Penyesuaian Aplikasi ATM yang harus dilakukan hari ini:
+1. validasi transfer tidak ke diri sendiri
+-> pengecekan pada saat setelah input tujuan (accoutNumber)
+
+2. Ada tiga jenis account (Masa Depan, Bisnis dan Siswa) dg perbedaan sbb
+-> Field baru di class account, tipe private int accType (0 admin, 1 siswa, 2 bisnis, 3 masa depan). 
+a. U/ account Siswa, tidak ada fasilitas transfer
+b. U/ account Bisnis, transfer tidak dikenakan biaya
+c. U/ account Masa Depan, transfer dikenakan biaya
+-> 2 Array untuk pilihan (jadi inputnya index)
+-> Biaya transfer dibikin field di account, double transferTax
+
+
+d. U/ account siswa, tidak ada biaya administrasi bulanan
+e. U/ account Masa Depan, biaya administrasi bulanan $1
+f. U/ account Bisnis, biaya administrasi bulanan $5
+-> Biaya administrasi dibikin field di account, double monthlyTax
+-> Field baru di class account, tipe private int accType (0 admin, 1 siswa, 2 bisnis, 3 masa depan). 
+
+g. Limit tarik tunai (withdraw) harian, siswa: $20; Masa Depan: $100; Bisnis: $1000
+-> Limit tarik tunai dibikin field di account, double withdrawLimit
+-> Field baru di class account, tipe private int accType (0 admin, 1 siswa, 2 bisnis, 3 masa depan). 
+
+h. Limit transfer harian, Masa Depan: $500; Bisnis: $10000
+-> Limit transfer harian dibikin field di account, double transferLimit
+-> Setiap hari berubah, field transferLimit diset 500 atau 10000, sesuai tipe account.
+-> Setiap transfer, field transferLimit berkurang sesuai nominal yang ditransferkan.
+-> Field baru di class account, tipe private int accType (0 admin, 1 siswa, 2 bisnis, 3 masa depan). 
+
+3. Ada proses harian u/ ubah tanggal sistem o/ admin
+-> field "tanggal hari ini" di class baru namanya SystemDate, fieldnya :
+   date prevDate, date currDate, 
+   method setCurrDate(date ..)
+   method getCurrDate(),
+   method dateCheck() //buat cek tanggal, udah harus bayar atau belum 
+
+-> Admin bisa set tanggal (ada di menu admin)
+-> if tanggal yg diset admin < prevDate, show error message.
+
+4. Penyesuaian sistem yang ada terhadap poin 3
+-> Otomatis saat no 3 dikerjain
+-> Sesuaikan dengan poin-poin yg lain juga
+
+5. Pengenaan Biaya administrasi dilakukan tgl 3
+-> method dateCheck() //buat cek tanggal, udah harus bayar atau belum 
+ 
+
+6. Saldo tidak bisa Negatif
+
+2 a-c 					   : Cahya
+2 d-f 					   : Reyhan
+2 gh  					   : Tio
+3 (otomatis dengan 4,5)    : Anas

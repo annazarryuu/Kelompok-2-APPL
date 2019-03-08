@@ -8,7 +8,7 @@ public class ATM {
     private Keypad keypad; // ATM's keypad
     private CashDispenser cashDispenser; // ATM's cash dispenser
     private DepositSlot depositSlot;
-
+    
     private BankDatabase bankDatabase; // account information database
 
     private boolean isAdmin = false;
@@ -131,6 +131,8 @@ public class ATM {
                         createTransaction(mainMenuSelection);
                 
                 currentTransaction.execute();
+                new History(currentAccountNumber).addTransaction(currentAccountNumber, mainMenuSelection, currentTransaction);
+                new History(currentAccountNumber).printHistory();
                 break;
             case DEPOSIT:
                 currentTransaction =

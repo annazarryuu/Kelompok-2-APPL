@@ -6,15 +6,23 @@ public class Account {
    double availableBalance; // funds available for withdrawal
    private double totalBalance; // funds available & pending deposits
    private boolean isBlocked; //Status Nasabah
-
+   private int accType;
+   private double monthlyTax;
+           
    // Account constructor initializes attributes
    public Account(int theAccountNumber, int thePIN, 
-      double theAvailableBalance, double theTotalBalance, boolean status) {
+      double theAvailableBalance, double theTotalBalance, boolean status, int theAccType) {
       accountNumber = theAccountNumber;
       pin = thePIN;
       availableBalance = theAvailableBalance;
       totalBalance = theTotalBalance;
       isBlocked = status;
+      switch(theAccType) {
+          case 0 : monthlyTax = 0.0; break;
+          case 1 : monthlyTax = 0.0; break;
+          case 2 : monthlyTax = 5.0; break;
+          case 3 : monthlyTax = 1.0; break;
+      }
    }
 
    // determines whether a user-specified PIN matches PIN in Account
@@ -59,6 +67,12 @@ public class Account {
 
    public int getAccountNumber() {
       return accountNumber;  
+   }
+   
+   public void monthlyPayment()
+   {
+       this.availableBalance = this.availableBalance - monthlyTax;
+       this.totalBalance = this.totalBalance - monthlyTax;
    }
 
 } 
