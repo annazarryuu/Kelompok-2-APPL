@@ -56,9 +56,15 @@ public Transfer( int accountNumber, Screen screen, Keypad keypadn, BankDatabase 
         screen.displayMessage("Input transfer amount : ");
         amounts = keypad.getInput();
         if (amounts < 0) {
+            validator = false;
             screen.displayMessage("Yeah, go F7ck your self!\n");
+        } else if ( amounts > bankDatabase.getAvailableBalance(targetAccount) ) {
+            validator = false;
+            screen.displayMessage("You're too poor to do that!\n");            
+        } else {
+            validator = true;
         }
-      } while (amounts < 0);
+      } while ( !validator );
       
       return 0;
       
