@@ -18,10 +18,10 @@ public class Account {
       totalBalance = theTotalBalance;
       isBlocked = status;
       switch(theAccType) {
-          case 0 : monthlyTax = 0.0;
-          case 1 : monthlyTax = 0.0;
-          case 2 : monthlyTax = 5.0;
-          case 3 : monthlyTax = 1.0;
+          case 0 : monthlyTax = 0.0; break;
+          case 1 : monthlyTax = 0.0; break;
+          case 2 : monthlyTax = 5.0; break;
+          case 3 : monthlyTax = 1.0; break;
       }
    }
 
