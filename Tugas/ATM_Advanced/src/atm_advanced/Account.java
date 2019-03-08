@@ -32,7 +32,7 @@ public class Account {
       }
       else {
          return false;
-   }
+      }
    };
 
    // returns available balance
@@ -78,6 +78,9 @@ public class Account {
 	return transferTax;
     }
    
+   public int getAccType(){
+       return accType;
+   }
 
 } 
 /*
