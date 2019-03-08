@@ -6,15 +6,17 @@ public class Account {
    double availableBalance; // funds available for withdrawal
    private double totalBalance; // funds available & pending deposits
    private boolean isBlocked; //Status Nasabah
-
+   private int accType;
+   
    // Account constructor initializes attributes
    public Account(int theAccountNumber, int thePIN, 
-      double theAvailableBalance, double theTotalBalance, boolean status) {
+      double theAvailableBalance, double theTotalBalance, boolean status, int theAccType) {
       accountNumber = theAccountNumber;
       pin = thePIN;
       availableBalance = theAvailableBalance;
       totalBalance = theTotalBalance;
       isBlocked = status;
+      accType = theAccType;
    }
 
    // determines whether a user-specified PIN matches PIN in Account
@@ -24,7 +26,7 @@ public class Account {
       }
       else {
          return false;
-   }
+      }
    };
 
    // returns available balance
@@ -59,6 +61,9 @@ public class Account {
 
    public int getAccountNumber() {
       return accountNumber;  
+   }
+   public int getAccType(){
+       return accType;
    }
 
 } 
