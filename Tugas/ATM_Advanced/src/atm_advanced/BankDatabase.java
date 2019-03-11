@@ -119,8 +119,4 @@ public class BankDatabase {
 	   accounts[i].monthlyPayment();
        }
    }
-   public double getTransferTax(int userAccountNumber)
-   {
-       return getAccount(userAccountNumber).getTransferTax();
-   }   
 } 

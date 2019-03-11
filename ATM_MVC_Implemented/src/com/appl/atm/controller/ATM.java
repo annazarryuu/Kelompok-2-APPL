@@ -15,12 +15,15 @@ import com.appl.atm.model.Withdrawal;
 import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
 import static com.appl.atm.model.Constants.*;
+import com.appl.atm.model.Menu;
+import java.util.ArrayList;
 
 /**
  *
  * @author Annazar
  */
 public class ATM {
+
     private int userAuthenticated;
     private int currentAccountNumber; // current user's account number
     private Screen screen; // ATM's screen
@@ -28,16 +31,18 @@ public class ATM {
     private CashDispenser cashDispenser; // ATM's cash dispenser
     private DepositSlot depositSlot;
     private BankDatabase bankDatabase; // account information database
-
+    private ArrayList<Menu> menuList;
 
     public ATM() {
-	userAuthenticated = 0;
+	userAuthenticated = 1;
 	currentAccountNumber = 0;
 	screen = new Screen();
 	keypad = new Keypad();
 	cashDispenser = new CashDispenser();
 	depositSlot = new DepositSlot();
 	bankDatabase = new BankDatabase();
+	menuList = new ArrayList<Menu>();
+	createMenuList();
     }
 
     // start ATM 
@@ -46,12 +51,12 @@ public class ATM {
 	while (true) {
 	    // loop while user is not yet authenticated
 	    screen.displayMessageLine("\nWelcome!\n");
-	    while (userAuthenticated != 1) {
+	    while (userAuthenticated != 0) {
 		authenticateUser(); // authenticate user
 	    }
 
 	    performTransactions(); // user is now authenticated
-	    userAuthenticated = 0; // reset before next ATM session
+	    userAuthenticated = 1; // reset before next ATM session
 	    currentAccountNumber = 0; // reset before next ATM session
 	    screen.displayMessageLine("\nThank you! Goodbye!");
 	}
@@ -69,12 +74,30 @@ public class ATM {
 		= bankDatabase.authenticateUser(accountNumber, pin);
 
 	// check whether authentication succeeded
-	if (userAuthenticated == 1) {
-	    currentAccountNumber = accountNumber; // save user's account #
-	} else {
-	    screen.displayMessageLine(
-		    "Invalid account number or PIN. Please try again.\n");
+	switch (userAuthenticated) {
+	    case AUTHENTICATE_SUCCESS:
+		currentAccountNumber = accountNumber; // save user's account #
+		break;
+	    case INVALID_PIN:
+		screen.displayMessageLine(
+			"Invalid PIN. Please try again.\n");
+		break;
+	    case USER_BLOCKED:
+		screen.displayMessageLine(
+			"Your account is blocked. Please contact our customer service.\n");
+		break;
+	    case USER_BE_BLOCKED:
+		screen.displayMessageLine(
+			"You have been tried 3 times. Your account is blocked.");
+		screen.displayMessageLine(
+			"Please contact our customer service.\n");
+		break;
+	    case USER_NOT_FOUND:
+		screen.displayMessageLine(
+			"User not found. Please try again.\n");
+		break;
 	}
+
     }
 
     // display the main menu and perform transactions
@@ -102,7 +125,7 @@ public class ATM {
 			    = new BalanceInquiryController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-		    
+
 		case WITHDRAWAL:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
@@ -110,7 +133,7 @@ public class ATM {
 			    = new WithdrawalController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-		    
+
 		case DEPOSIT:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
@@ -118,12 +141,14 @@ public class ATM {
 			    = new DepositController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-		    
+
+		case CHANGE_PIN:
+
 		case EXIT: // user chose to terminate session
 		    screen.displayMessageLine("\nExiting the system...");
 		    userExited = true; // this ATM session should end
 		    break;
-		    
+
 		default: // 
 		    screen.displayMessageLine(
 			    "\nYou did not enter a valid selection. Try again.");
@@ -135,12 +160,31 @@ public class ATM {
     // display the main menu and return an input selection
     private int displayMainMenu() {
 	screen.displayMessageLine("\nMain menu:");
-	screen.displayMessageLine("1 - View my balance");
-	screen.displayMessageLine("2 - Withdraw cash");
-	screen.displayMessageLine("3 - Deposit funds");
-	screen.displayMessageLine("4 - Exit\n");
+	ArrayList<Menu> menuShowed = new ArrayList<Menu>();
+	int accountType = bankDatabase.getAccount(currentAccountNumber).getAccountType();
+	
+	for(int i = 0; i < menuList.size(); i++)
+	{
+	    if(menuList.get(i).isAvailable(accountType)) {
+		menuShowed.add(menuList.get(i));
+	    }
+	}
+	
+	for(int i = 1; i < menuShowed.size(); i++) {
+	    screen.displayMessageLine(i + " - " + menuShowed.get(i).getKeteranganPilihan());
+	}
+	screen.displayMessageLine(menuShowed.size() + " " + menuShowed.get(0).getKeteranganPilihan());
+	
 	screen.displayMessage("Enter a choice: ");
-	return keypad.getInput(); // return user's selection
+	int choice = keypad.getInput(); // return user's selection
+	
+	if (choice == 0) {
+	    return menuShowed.size();
+	} else if (choice == menuShowed.size()) {
+	    return EXIT;
+	} else {
+	    return choice;
+	}
     }
 
     private Transaction createTransaction(int type) {
@@ -159,9 +203,26 @@ public class ATM {
 		temp = new Deposit(
 			currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
 		break;
+
 	}
 
 	return temp;
+    }
+
+    private void createMenuList() {
+	menuList.add(new Menu(EXIT, "Exit\n", true, true, true, true));
+	menuList.add(new Menu(BALANCE_INQUIRY, "View my balance", false, true, true, true));
+	menuList.add(new Menu(WITHDRAWAL, "Withdraw cash", false, true, true, true));
+	menuList.add(new Menu(DEPOSIT, "Deposit funds", false, true, true, true));
+	menuList.add(new Menu(TRANSFER, "Transfer balance", false, false, true, true));
+	menuList.add(new Menu(CHANGE_PIN, "Change PIN", false, true, true, true));
+	menuList.add(new Menu(UNBLOCK_ACCOUNT, "Unblock account", true, false, false, false));
+	menuList.add(new Menu(CHECK_DISPENSER_COUNT, "Check amout of cash in dispenser", true, false, false, false));
+	menuList.add(new Menu(ADD_DISPENSER_COUNT, "Add amount of cash in dispenser", true, false, false, false));
+	menuList.add(new Menu(ADD_ACCOUNT, "Add account to Bank Database", true, false, false, false));
+	menuList.add(new Menu(VALIDATE_DEPOSIT, "Deposit Validation", true, false, false, false));
+	menuList.add(new Menu(BANK_STATEMENT, "Bank statement", false, true, true, true));
+	menuList.add(new Menu(CHANGE_DATE, "Change Date", true, false, false, false));
     }
 
 }

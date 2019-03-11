@@ -5,6 +5,7 @@
  */
 package com.appl.atm.model;
 
+import static com.appl.atm.model.Constants.*;
 import com.appl.atm.view.Screen;
 
 /**
@@ -21,6 +22,6 @@ public class BalanceInquiry extends Transaction {
 
     @Override
     public int execute() {
-	return 0;
+	return BALANCE_INQUIRY_SUCCESS;
     }
 }
