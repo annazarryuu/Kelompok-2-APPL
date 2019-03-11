@@ -68,5 +68,12 @@ public class BankDatabase {
            return -1; //gagal unblock, akun gak ada
        }
    }
+   public void monthlyPayment()
+   {
+       for (int i = 0; i < accounts.size(); i++)
+       {
+	   accounts.get(i).monthlyPayment();
+       }
+   }
    
 }

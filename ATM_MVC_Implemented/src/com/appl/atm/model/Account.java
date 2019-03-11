@@ -15,6 +15,7 @@ public class Account {
     private int pin; // PIN for authentication
     private double availableBalance; // funds available for withdrawal
     private double totalBalance; // funds available & pending deposits
+    private double monthlyTax = 0; // funds available & pending deposits
 
     // Account constructor initializes attributes
     public Account(int theAccountNumber, int thePIN, 
@@ -90,5 +91,10 @@ public class Account {
     public void setTotalBalance(double totalBalance) {
         this.totalBalance = totalBalance;
     }
-    
+
+   public void monthlyPayment()
+   {
+       this.availableBalance = this.availableBalance - monthlyTax;
+       this.totalBalance = this.totalBalance - monthlyTax;
+   }    
 }
