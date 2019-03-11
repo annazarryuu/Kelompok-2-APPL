@@ -8,10 +8,19 @@ public class Account {
    private boolean isBlocked; //Status Nasabah
    private int accType;
    private double monthlyTax;
-           
+   private double transferTax;
+   private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
+   
+//   // Account constructor initializes attributes
+//   public Account(int theAccountNumber, int thePIN, 
+//      double theAvailableBalance, double theTotalBalance, boolean status, int theAccType) {
+//   
+//   private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0};
+
    // Account constructor initializes attributes
    public Account(int theAccountNumber, int thePIN, 
-      double theAvailableBalance, double theTotalBalance, boolean status, int theAccType) {
+      double theAvailableBalance, double theTotalBalance,
+      boolean status, int theAccType) {
       accountNumber = theAccountNumber;
       pin = thePIN;
       availableBalance = theAvailableBalance;
@@ -23,6 +32,9 @@ public class Account {
           case 2 : monthlyTax = 5.0; break;
           case 3 : monthlyTax = 1.0; break;
       }
+      
+      accType = theAccType;
+      transferTax = transferTaxes[accType];
    }
 
    // determines whether a user-specified PIN matches PIN in Account
@@ -32,7 +44,7 @@ public class Account {
       }
       else {
          return false;
-   }
+      }
    };
 
    // returns available balance
@@ -75,6 +87,13 @@ public class Account {
        this.totalBalance = this.totalBalance - monthlyTax;
    }
 
+    public double getTransferTax() {
+	return transferTax;
+    }
+   
+   public int getAccType(){
+       return accType;
+   }
 } 
 /*
 -> diwaktu luang belajar
