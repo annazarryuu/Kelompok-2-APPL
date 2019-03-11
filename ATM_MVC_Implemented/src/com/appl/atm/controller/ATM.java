@@ -16,6 +16,7 @@ import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
 import static com.appl.atm.model.Constants.*;
 import com.appl.atm.model.Menu;
+import com.appl.atm.model.ValidateDeposit;
 import java.util.ArrayList;
 
 /**
@@ -142,8 +143,13 @@ public class ATM {
 		    currentTransactionController.run(); // execute transaction
 		    break;
 
-		case CHANGE_PIN:
-
+		case VALIDATE_DEPOSIT:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new ValidateDepositController(currentTransaction);
+		    currentTransactionController.run(); // execute transaction
+		    break;
 		case EXIT: // user chose to terminate session
 		    screen.displayMessageLine("\nExiting the system...");
 		    userExited = true; // this ATM session should end
@@ -162,28 +168,23 @@ public class ATM {
 	screen.displayMessageLine("\nMain menu:");
 	ArrayList<Menu> menuShowed = new ArrayList<Menu>();
 	int accountType = bankDatabase.getAccount(currentAccountNumber).getAccountType();
-	
-	for(int i = 0; i < menuList.size(); i++)
-	{
-	    if(menuList.get(i).isAvailable(accountType)) {
+
+	for (int i = 0; i < menuList.size(); i++) {
+	    if (menuList.get(i).isAvailable(accountType)) {
 		menuShowed.add(menuList.get(i));
 	    }
 	}
-	
-	for(int i = 1; i < menuShowed.size(); i++) {
-	    screen.displayMessageLine(i + " - " + menuShowed.get(i).getKeteranganPilihan());
+
+	for (int i = 0; i < menuShowed.size(); i++) {
+	    screen.displayMessageLine((i + 1) + " - " + menuShowed.get(i).getKeteranganPilihan());
 	}
-	screen.displayMessageLine(menuShowed.size() + " " + menuShowed.get(0).getKeteranganPilihan());
-	
+
 	screen.displayMessage("Enter a choice: ");
 	int choice = keypad.getInput(); // return user's selection
-	
-	if (choice == 0) {
-	    return menuShowed.size();
-	} else if (choice == menuShowed.size()) {
-	    return EXIT;
+	if (choice < 1 || choice > menuShowed.size()) {
+	    return 99;
 	} else {
-	    return choice;
+	    return menuShowed.get(choice - 1).getNoPilihan();
 	}
     }
 
@@ -203,14 +204,16 @@ public class ATM {
 		temp = new Deposit(
 			currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
 		break;
-
+	    case VALIDATE_DEPOSIT:
+		temp = new ValidateDeposit(
+			currentAccountNumber, screen, bankDatabase, keypad);
+		break;
 	}
 
 	return temp;
     }
 
     private void createMenuList() {
-	menuList.add(new Menu(EXIT, "Exit\n", true, true, true, true));
 	menuList.add(new Menu(BALANCE_INQUIRY, "View my balance", false, true, true, true));
 	menuList.add(new Menu(WITHDRAWAL, "Withdraw cash", false, true, true, true));
 	menuList.add(new Menu(DEPOSIT, "Deposit funds", false, true, true, true));
@@ -223,6 +226,7 @@ public class ATM {
 	menuList.add(new Menu(VALIDATE_DEPOSIT, "Deposit Validation", true, false, false, false));
 	menuList.add(new Menu(BANK_STATEMENT, "Bank statement", false, true, true, true));
 	menuList.add(new Menu(CHANGE_DATE, "Change Date", true, false, false, false));
+	menuList.add(new Menu(EXIT, "Exit\n", true, true, true, true));
     }
 
 }

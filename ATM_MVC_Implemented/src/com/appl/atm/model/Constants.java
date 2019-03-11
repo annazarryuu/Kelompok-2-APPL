@@ -56,4 +56,7 @@ public final class Constants {
     // deposit
     public static final int DEPOSIT_SUCCESS = 0;
     public static final int ENVELOPE_NOT_RECEIVED = 1;
+    
+    // validate deposit
+    public static final int DEPOSIT_VALIDATE_SUCCESS = 0;
 }
