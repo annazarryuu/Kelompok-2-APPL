@@ -18,23 +18,23 @@ public class Account {
     private double transferTax;
     private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
     private double monthlyTax;
-    private int accType;
+    private int accountType;
 
     // Account constructor initializes attributes
     public Account(int theAccountNumber, int thePIN, 
-	double theAvailableBalance, double theTotalBalance, int theAccType) {
+	double theAvailableBalance, double theTotalBalance, int accountType) {
 
 	accountNumber = theAccountNumber;
 	pin = thePIN;
 	availableBalance = theAvailableBalance;
 	totalBalance = theTotalBalance;
-        switch(theAccType) {
+        switch(accountType) {
           case 0 : monthlyTax = 0.0; break;
           case 1 : monthlyTax = 0.0; break;
           case 2 : monthlyTax = 5.0; break;
           case 3 : monthlyTax = 1.0; break;
         }
-        accType = theAccType;
+        accountType = accountType;
     } 
 
     public void credit(double amount) {
