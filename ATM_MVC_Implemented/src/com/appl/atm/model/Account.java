@@ -17,15 +17,24 @@ public class Account {
     private double totalBalance; // funds available & pending deposits
     private double transferTax;
     private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
+    private double monthlyTax;
+    private int accType;
 
     // Account constructor initializes attributes
     public Account(int theAccountNumber, int thePIN, 
-	double theAvailableBalance, double theTotalBalance) {
+	double theAvailableBalance, double theTotalBalance, int theAccType) {
 
 	accountNumber = theAccountNumber;
 	pin = thePIN;
 	availableBalance = theAvailableBalance;
 	totalBalance = theTotalBalance;
+        switch(theAccType) {
+          case 0 : monthlyTax = 0.0; break;
+          case 1 : monthlyTax = 0.0; break;
+          case 2 : monthlyTax = 5.0; break;
+          case 3 : monthlyTax = 1.0; break;
+        }
+        accType = theAccType;
     } 
 
     public void credit(double amount) {
@@ -96,4 +105,11 @@ public class Account {
     public double getTransferTax() {
 	return transferTax;
     }
+    
+    public void monthlyPayment()
+   {
+       this.availableBalance = this.availableBalance - monthlyTax;
+       this.totalBalance = this.totalBalance - monthlyTax;
+   }
+    
 }

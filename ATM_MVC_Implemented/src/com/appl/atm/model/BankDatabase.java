@@ -17,9 +17,9 @@ public class BankDatabase {
     
     public BankDatabase() {
         accounts = new ArrayList<Account>();
-	accounts.add(new Account(00000, 00000, 0.0, 0.0));
-	accounts.add(new Account(1234, 4321, 1000.0, 1200.0));
-	accounts.add(new Account(8765, 5678, 200.0, 200.0));
+	accounts.add(new Account(00000, 00000, 0.0, 0.0, 0));
+	accounts.add(new Account(1234, 4321, 1000.0, 1200.0, 1));
+	accounts.add(new Account(8765, 5678, 200.0, 200.0, 2));
     }
     
     public Account getAccount(int accountNumber) {
@@ -71,5 +71,13 @@ public class BankDatabase {
     public void debit(int userAccountNumber, float amount) {
         getAccount(userAccountNumber).debit(amount);
     }
+    
+    public void monthlyPayment()
+   {
+       for (int i = 0; i < accounts.size(); i++)
+       {
+	   accounts.get(i).monthlyPayment();
+       }
+   }
    
 }
