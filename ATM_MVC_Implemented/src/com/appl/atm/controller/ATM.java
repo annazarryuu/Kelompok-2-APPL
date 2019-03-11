@@ -5,6 +5,7 @@
  */
 package com.appl.atm.controller;
 
+import com.appl.atm.model.AddAccount;
 import com.appl.atm.model.BalanceInquiry;
 import com.appl.atm.model.BankDatabase;
 import com.appl.atm.model.CashDispenser;
@@ -18,13 +19,14 @@ import static com.appl.atm.model.Constants.*;
 import com.appl.atm.model.Menu;
 import com.appl.atm.model.ValidateDeposit;
 import java.util.ArrayList;
+import com.appl.atm.model.DepositCashDispenser;
+import com.appl.atm.model.SeeCashDispenser;
 
 /**
  *
  * @author Annazar
  */
 public class ATM {
-
     private int userAuthenticated;
     private int currentAccountNumber; // current user's account number
     private Screen screen; // ATM's screen
@@ -126,7 +128,7 @@ public class ATM {
 			    = new BalanceInquiryController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-
+		    
 		case WITHDRAWAL:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
@@ -134,7 +136,7 @@ public class ATM {
 			    = new WithdrawalController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-
+		    
 		case DEPOSIT:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
@@ -150,11 +152,34 @@ public class ATM {
 			    = new ValidateDepositController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
+		case SEE_AVAILABLE_CASH_DISPENSER:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new SeeCashDispenserController(currentTransaction);
+		    currentTransactionController.run(); // execute transaction
+		    break;
+		case DEPOSIT_CASH_DISPENSER:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new DepositCashDispenserController(currentTransaction);
+		    currentTransactionController.run(); // execute transaction
+		    break;
+		case ADD_ACCOUNT:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new AddAccountController(currentTransaction);
+		    currentTransactionController.run(); // execute transaction
+		    break;
+                    
 		case EXIT: // user chose to terminate session
 		    screen.displayMessageLine("\nExiting the system...");
 		    userExited = true; // this ATM session should end
 		    break;
 
+                    
 		default: // 
 		    screen.displayMessageLine(
 			    "\nYou did not enter a valid selection. Try again.");
@@ -208,7 +233,17 @@ public class ATM {
 		temp = new ValidateDeposit(
 			currentAccountNumber, screen, bankDatabase, keypad);
 		break;
-	}
+	    case SEE_AVAILABLE_CASH_DISPENSER:
+		temp = new SeeCashDispenser(currentAccountNumber, screen, bankDatabase, cashDispenser);
+		break;
+	    case DEPOSIT_CASH_DISPENSER:
+		temp = new DepositCashDispenser(currentAccountNumber, screen, bankDatabase, cashDispenser, keypad);
+		break;
+	    case ADD_ACCOUNT:
+		temp = new AddAccount(currentAccountNumber, screen, bankDatabase);
+		break;
+
+        }
 
 	return temp;
     }

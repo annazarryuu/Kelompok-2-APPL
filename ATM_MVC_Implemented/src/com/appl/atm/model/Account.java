@@ -12,7 +12,7 @@ import static com.appl.atm.model.Constants.*;
  * @author Annazar
  */
 public class Account {
-
+    
     private int accountNumber; // account number
     private int pin; // PIN for authentication
     private double availableBalance; // funds available for withdrawal
