@@ -25,9 +25,9 @@ public Transfer( int accountNumber, Screen screen, Keypad keypadn, BankDatabase 
     BankDatabase bankDatabase = getBankDatabase();
     
     displayMenuOfAmounts(bankDatabase);
-    if (amounts != 0) {
+    if (amounts > 0) {
         bankDatabase.debit(targetAccount, amounts*-1);
-        bankDatabase.debit(getAccountNumber(), amounts);
+        bankDatabase.debit(getAccountNumber(), amounts+(int)bankDatabase.getTransferTax(getAccountNumber()));
     }
 }
 

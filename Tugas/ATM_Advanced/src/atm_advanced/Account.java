@@ -8,6 +8,7 @@ public class Account {
    private boolean isBlocked; //Status Nasabah
    private int accType;
    private double transferTax;
+   private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
    
    private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0};
 
@@ -22,7 +23,6 @@ public class Account {
       isBlocked = status;
       accType = theAccType;
       transferTax = transferTaxes[accType];
-      
    }
 
    // determines whether a user-specified PIN matches PIN in Account
@@ -81,7 +81,9 @@ public class Account {
    public int getAccType(){
        return accType;
    }
-
+   public double getTransferTax() {
+        return transferTax;
+   }   
 } 
 /*
 -> diwaktu luang belajar
