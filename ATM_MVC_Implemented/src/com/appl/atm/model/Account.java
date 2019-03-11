@@ -19,7 +19,9 @@ public class Account {
     private double totalBalance; // funds available & pending deposits
     private boolean blocked;
     private int triedCount;
-    private int accountType;
+    private int accountType;private double transferTax;
+    private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
+    private double monthlyTax;
 
     // Account constructor initializes attributes
     public Account(int theAccountNumber, int thePIN,
@@ -32,7 +34,12 @@ public class Account {
 	totalBalance = theTotalBalance;
 	accountType = theAccountType;
 	blocked = false;
-	triedCount = 0;
+	triedCount = 0;switch(accountType) {
+          case 0 : monthlyTax = 0.0; break;
+          case 1 : monthlyTax = 0.0; break;
+          case 2 : monthlyTax = 5.0; break;
+          case 3 : monthlyTax = 1.0; break;
+        }
     }
 
     public void credit(double amount) {
@@ -144,4 +151,15 @@ public class Account {
 	this.blocked = blocked;
     }
 
+    
+    public double getTransferTax() {
+	return transferTax;
+    }
+    
+    public void monthlyPayment()
+   {
+       this.availableBalance = this.availableBalance - monthlyTax;
+       this.totalBalance = this.totalBalance - monthlyTax;
+   }
+    
 }

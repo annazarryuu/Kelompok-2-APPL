@@ -55,5 +55,13 @@ public class BankDatabase {
 	    return ACCOUNT_SUCCESSFULLY_CREATED;
 	}
     }
-
+    
+    public void monthlyPayment()
+   {
+       for (int i = 0; i < accounts.size(); i++)
+       {
+	   accounts.get(i).monthlyPayment();
+       }
+   }
+   
 }
