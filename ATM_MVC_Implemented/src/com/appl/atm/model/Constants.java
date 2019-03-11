@@ -59,4 +59,12 @@ public final class Constants {
     
     // validate deposit
     public static final int DEPOSIT_VALIDATE_SUCCESS = 0;
+    
+    // unblock account
+    public static final int ACCOUNT_SUCCESSFULLY_UNBLOCKED = 0;
+    public static final int ACCOUNT_NOT_BLOCKED = 1;
+    
+    // add account
+    public static final int ACCOUNT_SUCCESSFULLY_CREATED = 0;
+    public static final int ACCOUNT_EXIST = 1;
 }

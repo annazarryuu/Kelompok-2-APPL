@@ -21,6 +21,7 @@ import com.appl.atm.model.ValidateDeposit;
 import java.util.ArrayList;
 import com.appl.atm.model.DepositCashDispenser;
 import com.appl.atm.model.SeeCashDispenser;
+import com.appl.atm.model.UnblockAccount;
 
 /**
  *
@@ -152,25 +153,36 @@ public class ATM {
 			    = new ValidateDepositController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-		case SEE_AVAILABLE_CASH_DISPENSER:
+		    
+		case CHECK_DISPENSER_COUNT:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
 		    currentTransactionController
 			    = new SeeCashDispenserController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-		case DEPOSIT_CASH_DISPENSER:
+		    
+		case ADD_DISPENSER_COUNT:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
 		    currentTransactionController
 			    = new DepositCashDispenserController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
+		    
 		case ADD_ACCOUNT:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
 		    currentTransactionController
 			    = new AddAccountController(currentTransaction);
+		    currentTransactionController.run(); // execute transaction
+		    break;
+		    
+		case UNBLOCK_ACCOUNT:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new UnblockAccountController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
                     
@@ -233,16 +245,18 @@ public class ATM {
 		temp = new ValidateDeposit(
 			currentAccountNumber, screen, bankDatabase, keypad);
 		break;
-	    case SEE_AVAILABLE_CASH_DISPENSER:
+	    case CHECK_DISPENSER_COUNT:
 		temp = new SeeCashDispenser(currentAccountNumber, screen, bankDatabase, cashDispenser);
 		break;
-	    case DEPOSIT_CASH_DISPENSER:
+	    case ADD_DISPENSER_COUNT:
 		temp = new DepositCashDispenser(currentAccountNumber, screen, bankDatabase, cashDispenser, keypad);
 		break;
 	    case ADD_ACCOUNT:
-		temp = new AddAccount(currentAccountNumber, screen, bankDatabase);
+		temp = new AddAccount(currentAccountNumber, screen, bankDatabase, keypad);
 		break;
-
+	    case UNBLOCK_ACCOUNT:
+		temp = new UnblockAccount(currentAccountNumber, screen, bankDatabase, keypad);
+		break;
         }
 
 	return temp;
@@ -255,7 +269,7 @@ public class ATM {
 	menuList.add(new Menu(TRANSFER, "Transfer balance", false, false, true, true));
 	menuList.add(new Menu(CHANGE_PIN, "Change PIN", false, true, true, true));
 	menuList.add(new Menu(UNBLOCK_ACCOUNT, "Unblock account", true, false, false, false));
-	menuList.add(new Menu(CHECK_DISPENSER_COUNT, "Check amout of cash in dispenser", true, false, false, false));
+	menuList.add(new Menu(CHECK_DISPENSER_COUNT, "Check amount of cash in dispenser", true, false, false, false));
 	menuList.add(new Menu(ADD_DISPENSER_COUNT, "Add amount of cash in dispenser", true, false, false, false));
 	menuList.add(new Menu(ADD_ACCOUNT, "Add account to Bank Database", true, false, false, false));
 	menuList.add(new Menu(VALIDATE_DEPOSIT, "Deposit Validation", true, false, false, false));

@@ -6,6 +6,7 @@
 
 package com.appl.atm.model;
 
+import static com.appl.atm.model.Constants.*;
 import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
 
@@ -14,18 +15,58 @@ import com.appl.atm.view.Screen;
  * @author Cahya
  */
 public class UnblockAccount extends Transaction {
-    private Keypad keypad = new Keypad();
+    private Keypad keypad;
+    private int unblockTarget;
     
-    public UnblockAccount(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase) {
+    public UnblockAccount(int userAccountNumber, Screen atmScreen,
+	    BankDatabase atmBankDatabase, Keypad atmKeypad) {
+	
         super(userAccountNumber, atmScreen, atmBankDatabase);
+	keypad = atmKeypad;
     }
     
     @Override
     public int execute() {
-        BankDatabase bankDatabase = getBankDatabase();
-        System.out.print("Insert Account Number : ");
-        int input = keypad.getInput();
-        return bankDatabase.unblockAccount(input);
+	Account account = getBankDatabase().getAccount(unblockTarget);
+	
+	if (account != null) {
+	    if (account.isBlocked()) {
+		account.setBlocked(false);
+		return ACCOUNT_SUCCESSFULLY_UNBLOCKED;
+	    } else {
+		return ACCOUNT_NOT_BLOCKED;
+	    }
+	} else {
+	    return USER_NOT_FOUND;
+	}
+    }
+
+    /**
+     * @return the keypad
+     */
+    public Keypad getKeypad() {
+	return keypad;
+    }
+
+    /**
+     * @param keypad the keypad to set
+     */
+    public void setKeypad(Keypad keypad) {
+	this.keypad = keypad;
+    }
+
+    /**
+     * @return the unblockTarget
+     */
+    public int getUnblockTarget() {
+	return unblockTarget;
+    }
+
+    /**
+     * @param unblockTarget the unblockTarget to set
+     */
+    public void setUnblockTarget(int unblockTarget) {
+	this.unblockTarget = unblockTarget;
     }
 
 }

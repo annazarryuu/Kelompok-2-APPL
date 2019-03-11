@@ -45,14 +45,14 @@ public class Account {
     }
 
     public int validatePIN(int thePIN) {
-	if (blocked) {
+	if (isBlocked()) {
 	    return USER_BLOCKED;
 	} else if (pin == thePIN) {
 	    triedCount = 0;
 	    return AUTHENTICATE_SUCCESS;
 	} else if (triedCount == 2) {
 	    triedCount = 0;
-	    blocked = true;
+	    setBlocked(true);
 	    return USER_BE_BLOCKED;
 	} else {
 	    triedCount++;
@@ -128,6 +128,20 @@ public class Account {
      */
     public void setAccountType(int accountType) {
 	this.accountType = accountType;
+    }
+
+    /**
+     * @return the blocked
+     */
+    public boolean isBlocked() {
+	return blocked;
+    }
+
+    /**
+     * @param blocked the blocked to set
+     */
+    public void setBlocked(boolean blocked) {
+	this.blocked = blocked;
     }
 
 }

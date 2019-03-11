@@ -44,5 +44,16 @@ public class BankDatabase {
 	    return USER_NOT_FOUND;
 	}
     }
+    
+    public int addAccount(int newAccountNumber, int newPIN, double newBalance, int newType) {
+	Account account = getAccount(newAccountNumber);
+	if (account != null) {
+	    return ACCOUNT_EXIST;
+	} else {
+	    account = new Account(newAccountNumber, newPIN, newBalance, newBalance, newType);
+	    accounts.add(account);
+	    return ACCOUNT_SUCCESSFULLY_CREATED;
+	}
+    }
 
 }

@@ -7,6 +7,7 @@ package com.appl.atm.controller;
 
 import com.appl.atm.model.Account;
 import com.appl.atm.model.BankDatabase;
+import static com.appl.atm.model.Constants.*;
 import com.appl.atm.model.Transaction;
 import com.appl.atm.model.ValidateDeposit;
 import com.appl.atm.view.Keypad;
@@ -29,13 +30,12 @@ public class ValidateDepositController extends TransactionController {
     public int run() {
 	getScreen().displayMessage("\nInput target account number : ");
 	int targetAccountNumber = getKeypad().getInput();
-	Account account = getBankDatabase().getAccount(targetAccountNumber);
+	transaction.setValidateTarget(targetAccountNumber);
+	int res = transaction.execute();
 	
-	if (account != null) {
-	    transaction.setValidateTarget(targetAccountNumber);
-	    transaction.execute();
-	    getScreen().displayMessageLine(targetAccountNumber + "'s deposit has been validated");
-	} else {
+	if (res == DEPOSIT_VALIDATE_SUCCESS) {
+	    getScreen().displayMessageLine(targetAccountNumber + "'s deposit has been validated.");
+	} else if (res == USER_NOT_FOUND) {
 	    getScreen().displayMessageLine("Account not found.");
 	}
 	
