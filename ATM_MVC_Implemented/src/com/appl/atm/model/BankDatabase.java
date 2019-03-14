@@ -5,6 +5,7 @@
  */
 package com.appl.atm.model;
 
+import static com.appl.atm.model.Constants.*;
 import java.util.ArrayList;
 
 /**
@@ -12,64 +13,59 @@ import java.util.ArrayList;
  * @author Annazar
  */
 public class BankDatabase {
-    
+
     private ArrayList<Account> accounts; // array of Accounts
-    
+
     public BankDatabase() {
-        accounts = new ArrayList<Account>();
-	accounts.add(new Account(00000, 00000, 0.0, 0.0, 0));
-	accounts.add(new Account(1234, 4321, 1000.0, 1200.0, 1));
-	accounts.add(new Account(8765, 5678, 200.0, 200.0, 2));
+	accounts = new ArrayList<Account>();
+	accounts.add(new Account(00000, 00000, 0.0, 0.0, ADMIN));
+	accounts.add(new Account(1234, 1234, 1000.0, 1200.0, SISWA));
+	accounts.add(new Account(5678, 5678, 200.0, 200.0, BISNIS));
+	accounts.add(new Account(12345, 12345, 200.0, 200.0, MASA_DEPAN));
     }
-    
+
     public Account getAccount(int accountNumber) {
 	int i;
-        for (i = 0; i < accounts.size(); i++) {
-            if (accounts.get(i).getAccountNumber() == accountNumber) {
-                return accounts.get(i);
-            }
-        } 
-        return null; // if no matching account was found, return null
-    }
-    
-    public int authenticateUser(int userAccountNumber, int userPIN)
-    {
-	Account userAccount = getAccount(userAccountNumber);
-	
-	if(userAccount != null)
-	{
-	    if(userAccount.getPin() == userPIN)
-	    {
-		return 1;
-	    }
-	    else
-	    {
-		return 2;
+	for (i = 0; i < accounts.size(); i++) {
+	    if (accounts.get(i).getAccountNumber() == accountNumber) {
+		return accounts.get(i);
 	    }
 	}
-	else
-	{
-	    return 2;
-	}
+	return null; // if no matching account was found, return null
     }
-    
-    public boolean validateAccount(int accountNumber) {
-      int i;
-      for (i = 0; i < accounts.size(); i++) {
-          if (accounts.get(i).getAccountNumber() == accountNumber) {
-              return true;
-          }
-      } 
-      return false; // if no matching account was found, return null
-   } 
-    
-    public double getTransferTax(int userAccountNumber)
-   {
-       return getAccount(userAccountNumber).getTransferTax();
-   }
 
-    public void debit(int userAccountNumber, float amount) {
-        getAccount(userAccountNumber).debit(amount);
+    public int authenticateUser(int userAccountNumber, int userPIN) {
+	Account userAccount = getAccount(userAccountNumber);
+
+	if (userAccount != null) {
+	    int res = userAccount.validatePIN(userPIN);
+	    return res;
+	} else {
+	    return USER_NOT_FOUND;
+	}
+    }
+    
+    public int addAccount(int newAccountNumber, int newPIN, double newBalance, int newType) {
+	Account account = getAccount(newAccountNumber);
+	if (account != null) {
+	    return ACCOUNT_EXIST;
+	} else {
+	    account = new Account(newAccountNumber, newPIN, newBalance, newBalance, newType);
+	    accounts.add(account);
+	    return ACCOUNT_SUCCESSFULLY_CREATED;
+	}
+    }
+    
+    public int changePIN(int newPIN, int currPIN, int accNum) {
+        Account acc = getAccount(accNum);
+        if(acc != null) {
+            if(newPIN == currPIN) {
+                return SAME_PIN_AS_BEFORE;
+            } else {
+                acc.setPin(newPIN);
+                return PIN_CHANGED_SUCCESSFULLY;
+            }
+        } else return USER_NOT_FOUND;
     }
     
     public void monthlyPayment()

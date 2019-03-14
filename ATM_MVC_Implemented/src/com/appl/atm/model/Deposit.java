@@ -5,6 +5,7 @@
  */
 package com.appl.atm.model;
 
+import static com.appl.atm.model.Constants.*;
 import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
 
@@ -34,9 +35,9 @@ public class Deposit extends Transaction {
 	if (depositSlot.isEnvelopeReceived()) {
 	    Account account = getBankDatabase().getAccount(getAccountNumber());
 	    account.credit(amount);
-	    return 0;
+	    return DEPOSIT_SUCCESS;
 	} else {
-	    return 1;
+	    return ENVELOPE_NOT_RECEIVED;
 	}
     }
 

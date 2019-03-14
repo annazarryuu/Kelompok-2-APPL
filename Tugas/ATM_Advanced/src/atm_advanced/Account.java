@@ -10,12 +10,6 @@ public class Account {
    private double monthlyTax;
    private double transferTax;
    private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
-   
-//   // Account constructor initializes attributes
-//   public Account(int theAccountNumber, int thePIN, 
-//      double theAvailableBalance, double theTotalBalance, boolean status, int theAccType) {
-//   
-//   private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0};
 
    // Account constructor initializes attributes
    public Account(int theAccountNumber, int thePIN, 

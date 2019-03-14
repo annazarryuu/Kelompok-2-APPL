@@ -5,6 +5,7 @@
  */
 package com.appl.atm.model;
 
+import static com.appl.atm.model.Constants.*;
 import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
 
@@ -34,15 +35,15 @@ public class Withdrawal extends Transaction {
 	Account account = getBankDatabase().getAccount(getAccountNumber());
 
 	if (account.getAvailableBalance() < amount) {
-	    return 1;
+	    return ACCOUNT_BALANCE_NOT_SUFFICIENT;
 	}
 
 	if (cashDispenser.isSufficientCashAvailable(amount)) {
 	    cashDispenser.dispenseCash(amount);
 	    account.debit(amount);
-	    return 0;
+	    return WITHDRAWAL_SUCCESS;
 	} else {
-	    return 2;
+	    return CASH_DISPENSER_NOT_SUFFICIENT;
 	}
     }
 

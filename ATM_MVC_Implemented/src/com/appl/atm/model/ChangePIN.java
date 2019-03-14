@@ -5,6 +5,7 @@
  */
 package com.appl.atm.model;
 
+import static com.appl.atm.model.Constants.*;
 import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
 
@@ -15,28 +16,52 @@ import com.appl.atm.view.Screen;
 public class ChangePIN extends Transaction {
 
     private Keypad keypad;
-    
-    public ChangePIN(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase) {
-        super(userAccountNumber, atmScreen, atmBankDatabase);
-        keypad = new Keypad();
+    private int newPIN;
+    private int currPIN;
+
+    public ChangePIN(int userAccountNumber, Screen atmScreen,
+	    BankDatabase atmBankDatabase, Keypad atmKeypad) {
+
+	super(userAccountNumber, atmScreen, atmBankDatabase);
+	keypad = atmKeypad;
     }
 
-    public int execute(int newPIN) {
-        Account currAcc = getBankDatabase().getAccount(getAccountNumber());
-        
-        if(currAcc != null) {
-            currAcc.setPin(newPIN);
-            return 0;
-        } else return -1;
-    }
-    
     public Keypad getKeypad() {
 	return keypad;
     }
 
     @Override
     public int execute() {
-        return 0;
+        BankDatabase bankDB = getBankDatabase();
+	return bankDB.changePIN(newPIN, currPIN, getAccountNumber());
+    }
+
+    /**
+     * @return the newPIN
+     */
+    public int getNewPIN() {
+        return newPIN;
+    }
+
+    /**
+     * @param newPIN the newPIN to set
+     */
+    public void setNewPIN(int newPIN) {
+        this.newPIN = newPIN;
+    }
+
+    /**
+     * @return the currPIN
+     */
+    public int getCurrPIN() {
+        return currPIN;
+    }
+
+    /**
+     * @param currPIN the currPIN to set
+     */
+    public void setCurrPIN(int currPIN) {
+        this.currPIN = currPIN;
     }
     
 }

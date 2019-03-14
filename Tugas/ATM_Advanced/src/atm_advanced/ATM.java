@@ -264,5 +264,5 @@ public class ATM {
         menuPilihan[9] = new Menu(SET_DATE, "Set Date", true, false, false, false);
         menuPilihan[10] = new Menu(EXIT, "Exit\n", true, true, true, true);
     }
-
+    
 }
