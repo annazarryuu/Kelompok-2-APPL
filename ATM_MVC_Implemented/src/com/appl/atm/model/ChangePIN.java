@@ -5,6 +5,7 @@
  */
 package com.appl.atm.model;
 
+import static com.appl.atm.model.Constants.*;
 import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
 
@@ -15,28 +16,32 @@ import com.appl.atm.view.Screen;
 public class ChangePIN extends Transaction {
 
     private Keypad keypad;
-    
-    public ChangePIN(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase) {
-        super(userAccountNumber, atmScreen, atmBankDatabase);
-        keypad = new Keypad();
+
+    public ChangePIN(int userAccountNumber, Screen atmScreen,
+	    BankDatabase atmBankDatabase, Keypad atmKeypad) {
+
+	super(userAccountNumber, atmScreen, atmBankDatabase);
+	keypad = atmKeypad;
     }
 
     public int execute(int newPIN) {
-        Account currAcc = getBankDatabase().getAccount(getAccountNumber());
-        
-        if(currAcc != null) {
-            currAcc.setPin(newPIN);
-            return 0;
-        } else return -1;
+	Account currAcc = getBankDatabase().getAccount(getAccountNumber());
+
+	if (currAcc != null) {
+	    currAcc.setPin(newPIN);
+	    return PIN_CHANGED_SUCCESSFULLY;
+	} else {
+	    return SAME_PIN_AS_BEFORE;
+	}
     }
-    
+
     public Keypad getKeypad() {
 	return keypad;
     }
 
     @Override
     public int execute() {
-        return 0;
+	return 0;
     }
-    
+
 }

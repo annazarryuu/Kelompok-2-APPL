@@ -7,18 +7,18 @@
 package com.appl.atm.controller;
 
 import com.appl.atm.model.Transaction;
-import com.appl.atm.model.SeeCashDispenser;
+import com.appl.atm.model.CheckCashDispenser;
 
 /**
  *
  * @author Cahya
  */
-public class SeeCashDispenserController extends TransactionController {
-    private SeeCashDispenser transaction;
+public class CheckDispenserCountController extends TransactionController {
+    private CheckCashDispenser transaction;
 
-    public SeeCashDispenserController(Transaction theTransaction) {
+    public CheckDispenserCountController(Transaction theTransaction) {
 	super(theTransaction);
-	transaction = (SeeCashDispenser) getTransaction();
+	transaction = (CheckCashDispenser) getTransaction();
     }
 
     @Override
