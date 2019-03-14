@@ -22,6 +22,7 @@ import com.appl.atm.model.ValidateDeposit;
 import java.util.ArrayList;
 import com.appl.atm.model.DepositCashDispenser;
 import com.appl.atm.model.CheckCashDispenser;
+import com.appl.atm.model.SystemDate;
 import com.appl.atm.model.Transfer;
 import com.appl.atm.model.UnblockAccount;
 
@@ -38,6 +39,7 @@ public class ATM {
     private CashDispenser cashDispenser; // ATM's cash dispenser
     private DepositSlot depositSlot;
     private BankDatabase bankDatabase; // account information database
+//    private SystemDate systemDate;
     private ArrayList<Menu> menuList;
 
     public ATM() {
@@ -49,6 +51,7 @@ public class ATM {
 	depositSlot = new DepositSlot();
 	bankDatabase = new BankDatabase();
 	menuList = new ArrayList<Menu>();
+//        systemDate = new SystemDate();
 	createMenuList();
     }
 
@@ -204,7 +207,15 @@ public class ATM {
 			    = new ChangePINController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-
+                    
+		case CHANGE_DATE:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new SystemDateController(currentTransaction);
+		    currentTransactionController.run(); // execute transaction
+		    break;
+                    
 		case EXIT: // user chose to terminate session
 		    screen.displayMessageLine("\nExiting the system...");
 		    userExited = true; // this ATM session should end
@@ -281,7 +292,10 @@ public class ATM {
 	    case CHANGE_PIN:
 		temp = new ChangePIN(currentAccountNumber, screen, bankDatabase, keypad);
 		break;
-	}
+	    case CHANGE_DATE:
+		temp = new SystemDate(currentAccountNumber, screen, bankDatabase, keypad);
+		break;
+        }
 
 	return temp;
     }
