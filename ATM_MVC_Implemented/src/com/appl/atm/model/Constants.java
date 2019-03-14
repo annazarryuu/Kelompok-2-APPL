@@ -53,6 +53,7 @@ public final class Constants {
     public static final int WITHDRAWAL_SUCCESS = 0;
     public static final int ACCOUNT_BALANCE_NOT_SUFFICIENT = 1;
     public static final int CASH_DISPENSER_NOT_SUFFICIENT = 2;
+    public static final int WITHDRAW_LIMIT_EXCEED = 3;
 
     // deposit
     public static final int DEPOSIT_SUCCESS = 0;
@@ -77,4 +78,11 @@ public final class Constants {
     //change PIN
     public static final int PIN_CHANGED_SUCCESSFULLY = 0;
     public static final int SAME_PIN_AS_BEFORE = 1;
+    
+    //change date
+    public static final int DATE_CHANGED_SUCCESSFULLY = 0;
+    public static final int TIME_REWIND = 1;
+    public static final int TIME_DOESNT_CHANGED = 2;
+    public static final int ADMIN_TAX_PAID = 3;
+    public static final int ADMIN_TAX_NOT_PAID = 4;
 }

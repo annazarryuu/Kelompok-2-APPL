@@ -36,11 +36,14 @@ public class Withdrawal extends Transaction {
 
 	if (account.getAvailableBalance() < amount) {
 	    return ACCOUNT_BALANCE_NOT_SUFFICIENT;
+	} else if (account.getCurrentWithdrawLimit() < amount) {
+	    return WITHDRAW_LIMIT_EXCEED;
 	}
 
 	if (cashDispenser.isSufficientCashAvailable(amount)) {
 	    cashDispenser.dispenseCash(amount);
 	    account.debit(amount);
+	    getBankDatabase().addBankStatement(this);
 	    return WITHDRAWAL_SUCCESS;
 	} else {
 	    return CASH_DISPENSER_NOT_SUFFICIENT;
@@ -87,6 +90,12 @@ public class Withdrawal extends Transaction {
      */
     public void setCashDispenser(CashDispenser cashDispenser) {
 	this.cashDispenser = cashDispenser;
+    }
+
+    @Override
+    public String toString() {
+	String res = "Withdraw $" + amount + ".";
+	return res;
     }
 
 }

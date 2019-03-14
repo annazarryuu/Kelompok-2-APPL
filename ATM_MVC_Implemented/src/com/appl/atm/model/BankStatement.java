@@ -5,28 +5,33 @@
  */
 package com.appl.atm.model;
 
-import static com.appl.atm.model.Constants.*;
 import com.appl.atm.view.Screen;
+import java.util.ArrayList;
 
 /**
  *
  * @author Annazar
  */
-public class BalanceInquiry extends Transaction {
-    // BalanceInquiry constructor
-    public BalanceInquiry(int userAccountNumber, Screen atmScreen, 
-	BankDatabase atmBankDatabase) {
+public class BankStatement extends Transaction {
 
+    public BankStatement(int userAccountNumber, Screen atmScreen,
+	    BankDatabase atmBankDatabase) {
+	
 	super(userAccountNumber, atmScreen, atmBankDatabase);
-    } 
+    }
 
     @Override
     public int execute() {
-	return BALANCE_INQUIRY_SUCCESS;
+	return 0;
+    }
+    
+    public ArrayList<Transaction> getBankStatements() {
+	return getBankDatabase().getBankStatement(getAccountNumber());
     }
 
     @Override
     public String toString() {
 	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

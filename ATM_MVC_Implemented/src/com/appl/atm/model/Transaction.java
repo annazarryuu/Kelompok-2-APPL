@@ -23,6 +23,7 @@ public abstract class Transaction {
     }
     
     public abstract int execute();
+    public abstract String toString();
 
     /**
      * @return the accountNumber

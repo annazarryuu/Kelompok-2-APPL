@@ -39,6 +39,7 @@ public class Transfer extends Transaction {
 	    } else {
 		account.debit(amount + paymentTax);
 		target.debit(-1 * amount);
+		getBankDatabase().addBankStatement(this);
 		return TRANSFER_SUCCESS;
 	    }
 	} else {
@@ -87,6 +88,12 @@ public class Transfer extends Transaction {
      */
     public void setTargetAccount(int targetAccount) {
 	this.targetAccount = targetAccount;
+    }
+
+    @Override
+    public String toString() {
+	String res = "Transfer $" + amount + " to " + targetAccount + ".";
+	return res;
     }
 
 }

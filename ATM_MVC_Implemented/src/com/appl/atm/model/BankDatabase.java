@@ -15,8 +15,10 @@ import java.util.ArrayList;
 public class BankDatabase {
 
     private ArrayList<Account> accounts; // array of Accounts
+    private ArrayList<Transaction> bankStatements;
 
     public BankDatabase() {
+	bankStatements = new ArrayList<Transaction>();
 	accounts = new ArrayList<Account>();
 	accounts.add(new Account(00000, 00000, 0.0, 0.0, ADMIN));
 	accounts.add(new Account(1234, 1234, 1000.0, 1200.0, SISWA));
@@ -34,6 +36,22 @@ public class BankDatabase {
 	return null; // if no matching account was found, return null
     }
 
+    public ArrayList<Transaction> getBankStatement(int accountNumber) {
+	ArrayList<Transaction> result = new ArrayList<Transaction>();
+
+	for (int i = 0; i < bankStatements.size(); i++) {
+	    if (bankStatements.get(i).getAccountNumber() == accountNumber) {
+		result.add(bankStatements.get(i));
+	    }
+	}
+
+	return result.isEmpty() ? null : result;
+    }
+    
+    public void addBankStatement(Transaction theTransaction) {
+	bankStatements.add(theTransaction);
+    }
+
     public int authenticateUser(int userAccountNumber, int userPIN) {
 	Account userAccount = getAccount(userAccountNumber);
 
@@ -44,7 +62,7 @@ public class BankDatabase {
 	    return USER_NOT_FOUND;
 	}
     }
-    
+
     public int addAccount(int newAccountNumber, int newPIN, double newBalance, int newType) {
 	Account account = getAccount(newAccountNumber);
 	if (account != null) {
@@ -55,13 +73,17 @@ public class BankDatabase {
 	    return ACCOUNT_SUCCESSFULLY_CREATED;
 	}
     }
-    
-    public void monthlyPayment()
-   {
-       for (int i = 0; i < accounts.size(); i++)
-       {
-	   accounts.get(i).monthlyPayment();
-       }
-   }
-   
+
+    public void monthlyPayment() {
+	for (int i = 0; i < accounts.size(); i++) {
+	    accounts.get(i).monthlyPayment();
+	}
+    }
+
+    public void dailyWithdrawReset() {
+	for (int i = 0; i < accounts.size(); i++) {
+	    accounts.get(i).dailyWithdrawReset();
+	}
+    }
+
 }

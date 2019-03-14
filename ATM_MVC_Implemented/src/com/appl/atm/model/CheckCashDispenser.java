@@ -24,6 +24,11 @@ public class CheckCashDispenser extends Transaction{
     public int execute(){
         return cashDispenser.getCountCash();
     }
+
+    @Override
+    public String toString() {
+	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 
 

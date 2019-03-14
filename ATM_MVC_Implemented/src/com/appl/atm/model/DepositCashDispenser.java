@@ -57,4 +57,9 @@ public class DepositCashDispenser extends Transaction{
         }
         return (int) keypadInput / 20;
     }
+
+    @Override
+    public String toString() {
+	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -8,6 +8,7 @@ package com.appl.atm.controller;
 import com.appl.atm.model.AddAccount;
 import com.appl.atm.model.BalanceInquiry;
 import com.appl.atm.model.BankDatabase;
+import com.appl.atm.model.BankStatement;
 import com.appl.atm.model.CashDispenser;
 import com.appl.atm.model.ChangePIN;
 import com.appl.atm.model.Deposit;
@@ -39,7 +40,7 @@ public class ATM {
     private CashDispenser cashDispenser; // ATM's cash dispenser
     private DepositSlot depositSlot;
     private BankDatabase bankDatabase; // account information database
-//    private SystemDate systemDate;
+    private SystemDate systemDate;
     private ArrayList<Menu> menuList;
 
     public ATM() {
@@ -199,7 +200,7 @@ public class ATM {
 			    = new TransferController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-		    
+
 		case CHANGE_PIN:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
@@ -207,7 +208,7 @@ public class ATM {
 			    = new ChangePINController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-                    
+
 		case CHANGE_DATE:
 		    currentTransaction
 			    = createTransaction(mainMenuSelection);
@@ -215,7 +216,15 @@ public class ATM {
 			    = new SystemDateController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
-                    
+
+		case BANK_STATEMENT:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new BankStatementController(currentTransaction);
+		    currentTransactionController.run(); // execute transaction
+		    break;
+
 		case EXIT: // user chose to terminate session
 		    screen.displayMessageLine("\nExiting the system...");
 		    userExited = true; // this ATM session should end
@@ -293,9 +302,15 @@ public class ATM {
 		temp = new ChangePIN(currentAccountNumber, screen, bankDatabase, keypad);
 		break;
 	    case CHANGE_DATE:
-		temp = new SystemDate(currentAccountNumber, screen, bankDatabase, keypad);
+		if (systemDate == null) {
+		    systemDate = new SystemDate(currentAccountNumber, screen, bankDatabase, keypad);
+		}
+		temp = systemDate;
 		break;
-        }
+	    case BANK_STATEMENT:
+		temp = new BankStatement(currentAccountNumber, screen, bankDatabase);
+		break;
+	}
 
 	return temp;
     }
