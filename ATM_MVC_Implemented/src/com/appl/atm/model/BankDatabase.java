@@ -73,7 +73,7 @@ public class BankDatabase {
 	
 	for (int i = 0; i < bankStatements.size(); i++) {
 	    if (bankStatements.get(i).getTransaction().getAccountNumber() == accountNumber
-		    && bankStatements.get(i).getDate() == date
+		    && bankStatements.get(i).getDate().compareTo(date) == 0
 		    && bankStatements.get(i).getTransacionType() == TRANSFER) {
 		
 		result.add(bankStatements.get(i));
