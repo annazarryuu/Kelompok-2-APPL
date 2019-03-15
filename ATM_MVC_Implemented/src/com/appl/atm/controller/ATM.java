@@ -308,7 +308,7 @@ public class ATM {
 		temp = systemDate;
 		break;
 	    case BANK_STATEMENT:
-		temp = new BankStatement(currentAccountNumber, screen, bankDatabase);
+		temp = new BankStatement(currentAccountNumber, screen, bankDatabase, keypad);
 		break;
 	}
 

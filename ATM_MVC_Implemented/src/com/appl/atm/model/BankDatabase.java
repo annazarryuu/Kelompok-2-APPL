@@ -7,6 +7,8 @@ package com.appl.atm.model;
 
 import static com.appl.atm.model.Constants.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 /**
  *
@@ -15,10 +17,10 @@ import java.util.ArrayList;
 public class BankDatabase {
 
     private ArrayList<Account> accounts; // array of Accounts
-    private ArrayList<Transaction> bankStatements;
+    private ArrayList<Statement> bankStatements;
 
     public BankDatabase() {
-	bankStatements = new ArrayList<Transaction>();
+	bankStatements = new ArrayList<Statement>();
 	accounts = new ArrayList<Account>();
 	accounts.add(new Account(00000, 00000, 0.0, 0.0, ADMIN));
 	accounts.add(new Account(1234, 1234, 1000.0, 1200.0, SISWA));
@@ -36,20 +38,53 @@ public class BankDatabase {
 	return null; // if no matching account was found, return null
     }
 
-    public ArrayList<Transaction> getBankStatement(int accountNumber) {
-	ArrayList<Transaction> result = new ArrayList<Transaction>();
+    public ArrayList<Statement> getBankStatement(int accountNumber) {
+	ArrayList<Statement> result = new ArrayList<Statement>();
 
 	for (int i = 0; i < bankStatements.size(); i++) {
-	    if (bankStatements.get(i).getAccountNumber() == accountNumber) {
+	    if (bankStatements.get(i).getTransaction().getAccountNumber() == accountNumber) {
 		result.add(bankStatements.get(i));
 	    }
 	}
 
 	return result.isEmpty() ? null : result;
     }
-    
-    public void addBankStatement(Transaction theTransaction) {
-	bankStatements.add(theTransaction);
+
+    public ArrayList<Statement> getBankStatementMonth(int accountNumber, int month) {
+	ArrayList<Statement> result = new ArrayList<Statement>();
+
+	for (int i = 0; i < bankStatements.size(); i++) {
+	    if (bankStatements.get(i).getTransaction().getAccountNumber() == accountNumber
+		    && bankStatements.get(i).getDate().getMonth() == month
+		    && bankStatements.get(i).getTransacionType() == WITHDRAWAL) {
+		
+		result.add(bankStatements.get(i));
+	    }
+	}
+
+	Collections.sort(result);
+	Collections.reverse(result);
+	return result.isEmpty() ? null : result;
+    }
+
+    public ArrayList<Statement> getBankStatementToday(int accountNumber) {
+	ArrayList<Statement> result = new ArrayList<Statement>();
+	Date date = new SystemDate(0, null, null, null).getCurrDate();
+	
+	for (int i = 0; i < bankStatements.size(); i++) {
+	    if (bankStatements.get(i).getTransaction().getAccountNumber() == accountNumber
+		    && bankStatements.get(i).getDate() == date
+		    && bankStatements.get(i).getTransacionType() == TRANSFER) {
+		
+		result.add(bankStatements.get(i));
+	    }
+	}
+
+	return result.isEmpty() ? null : result;
+    }
+
+    public void addBankStatement(Statement theStatement) {
+	bankStatements.add(theStatement);
     }
 
     public int authenticateUser(int userAccountNumber, int userPIN) {

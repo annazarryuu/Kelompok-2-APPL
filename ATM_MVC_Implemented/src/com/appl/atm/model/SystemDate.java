@@ -16,8 +16,8 @@ import java.util.Date;
  */
 public class SystemDate extends Transaction {
 
-    private Date prevDate;
-    private Date currDate;
+    private static Date prevDate;
+    private static Date currDate;
     private Keypad keypad; // reference to keypad
 
     public SystemDate(int userAccountNumber, Screen atmScreen,
@@ -25,8 +25,12 @@ public class SystemDate extends Transaction {
 
 	super(userAccountNumber, atmScreen, atmBankDatabase);
 	keypad = atmKeypad;
-	prevDate = new Date(System.currentTimeMillis());
-	currDate = new Date(System.currentTimeMillis());
+	if (prevDate == null) {
+	    prevDate = new Date(System.currentTimeMillis());
+	}
+	if (currDate == null) {
+	    currDate = new Date(System.currentTimeMillis());
+	}
     }
 
     @Override
