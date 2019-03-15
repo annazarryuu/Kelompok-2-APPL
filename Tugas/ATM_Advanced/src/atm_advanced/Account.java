@@ -10,6 +10,7 @@ public class Account {
    double availableBalance; // funds available for withdrawal
    private double totalBalance; // funds available & pending deposits
    private boolean isBlocked; //Status Nasabah
+<<<<<<< HEAD
    private double withdrawLimit; //Batasan tarik tunai akun
    private double transferLimit; //Batasan transfer akun
    private int accType; //Tipe akun pengguna 0 admin 1 siswa 2 bisnis 3 masa depan
@@ -17,13 +18,36 @@ public class Account {
    // Account constructor initializes attributes
    public Account(int theAccountNumber, int thePIN, 
       double theAvailableBalance, double theTotalBalance, boolean status, int accType) {
+=======
+   private int accType;
+   private double monthlyTax;
+   private double transferTax;
+   private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
+
+   // Account constructor initializes attributes
+   public Account(int theAccountNumber, int thePIN, 
+      double theAvailableBalance, double theTotalBalance,
+      boolean status, int theAccType) {
+>>>>>>> Advanced
       accountNumber = theAccountNumber;
       pin = thePIN;
       availableBalance = theAvailableBalance;
       totalBalance = theTotalBalance;
       isBlocked = status;
+<<<<<<< HEAD
       this.accType = accType;
       setLimit();
+=======
+      switch(theAccType) {
+          case 0 : monthlyTax = 0.0; break;
+          case 1 : monthlyTax = 0.0; break;
+          case 2 : monthlyTax = 5.0; break;
+          case 3 : monthlyTax = 1.0; break;
+      }
+      
+      accType = theAccType;
+      transferTax = transferTaxes[accType];
+>>>>>>> Advanced
    }
 
    // determines whether a user-specified PIN matches PIN in Account
@@ -33,7 +57,11 @@ public class Account {
       }
       else {
          return false;
+<<<<<<< HEAD
         }
+=======
+      }
+>>>>>>> Advanced
    };
 
    // returns available balance
@@ -70,6 +98,7 @@ public class Account {
       return accountNumber;  
    }
    
+<<<<<<< HEAD
    private void setLimit() {
        switch (accType) {
            case ADMIN:
@@ -141,6 +170,19 @@ public class Account {
    }
    
    public int getAccType() {
+=======
+   public void monthlyPayment()
+   {
+       this.availableBalance = this.availableBalance - monthlyTax;
+       this.totalBalance = this.totalBalance - monthlyTax;
+   }
+
+    public double getTransferTax() {
+	return transferTax;
+    }
+   
+   public int getAccType(){
+>>>>>>> Advanced
        return accType;
    }
 } 

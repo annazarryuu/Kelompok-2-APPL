@@ -23,8 +23,12 @@ public class AddAccount extends Transaction {
         int newAccountNumber = keypad.getInput();
         System.out.print("Inser new PIN : ");
         int newPIN = keypad.getInput();
+<<<<<<< HEAD
         System.out.print("Choose account type : ");
         System.out.print("\n1. Siswa\n2. Masa Depan\n3. Bisnis\nInput your choice :");
+=======
+        System.out.print("Insert type of the account (1. Siswa, 2. Bisnis, 3. Masa Depan) : ");
+>>>>>>> Advanced
         int accType = keypad.getInput();
         
         bankDatabase.addAccount(newAccountNumber, newPIN, accType);
