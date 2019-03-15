@@ -11,7 +11,6 @@ import com.appl.atm.model.SystemDate;
 import com.appl.atm.model.Transaction;
 import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 

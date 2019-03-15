@@ -34,7 +34,7 @@ public class BankStatementController extends TransactionController {
 	} else {
 	    getScreen().displayMessageLine("Account number : " + getAccountNumber());
 	    for (int i = 0; i < bankStatement.size(); i++) {
-		getScreen().displayMessageLine("- " + bankStatement.get(i).toString());
+		getScreen().displayMessageLine("- " + bankStatement.get(i).toString()); //langsung toString biar gausah bedain withdraw / transfer dll
 	    }
 	}
 	
