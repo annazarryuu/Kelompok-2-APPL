@@ -16,8 +16,6 @@ import java.util.Date;
  */
 public class SystemDate extends Transaction {
 
-    private Date prevDate;
-    private Date currDate;
     private static Date prevDate;
     private static Date currDate;
     private Keypad keypad; // reference to keypad
@@ -48,16 +46,17 @@ public class SystemDate extends Transaction {
 	    prevDate = currDate;
 	    return res == ADMIN_TAX_PAID ? res : DATE_CHANGED_SUCCESSFULLY;
 	} else {
-	if (currDate.compareTo(prevDate) < 0) { //waktu yg di input < prevDate
-	    currDate = prevDate;
-	    return TIME_REWIND;
-	} else if (currDate.compareTo(prevDate) > 0) { //waktu yg di input > prevDate
-	    int res = this.dateCheck();
-	    getBankDatabase().dailyWithdrawReset(); //reset withdraw tiap akun
-	    prevDate = currDate;
-	    return res == ADMIN_TAX_PAID ? res : DATE_CHANGED_SUCCESSFULLY; //penentuan input waktu sukses atau tidak
-	} else { //waktu yang di input == prevDate
-	    return TIME_DOESNT_CHANGED;
+	    if (currDate.compareTo(prevDate) < 0) { //waktu yg di input < prevDate
+		currDate = prevDate;
+		return TIME_REWIND;
+	    } else if (currDate.compareTo(prevDate) > 0) { //waktu yg di input > prevDate
+		int res = this.dateCheck();
+		getBankDatabase().dailyWithdrawReset(); //reset withdraw tiap akun
+		prevDate = currDate;
+		return res == ADMIN_TAX_PAID ? res : DATE_CHANGED_SUCCESSFULLY; //penentuan input waktu sukses atau tidak
+	    } else { //waktu yang di input == prevDate
+		return TIME_DOESNT_CHANGED;
+	    }
 	}
     }
 
@@ -90,13 +89,6 @@ public class SystemDate extends Transaction {
     }
 
     public int dateCheck() {
-	if (prevDate.getDate() < 3 && currDate.getDate() > 2) {
-	    getBankDatabase().monthlyPayment();
-	    return ADMIN_TAX_PAID;
-	} else if (prevDate.getMonth() < currDate.getMonth() && currDate.getDate() > 2) {
-	    getBankDatabase().monthlyPayment();
-	    return ADMIN_TAX_PAID;
-	} else if (prevDate.getYear() < currDate.getYear() && currDate.getDate() > 2) {
 	if (prevDate.getDate() < 3 && currDate.getDate() > 2) { //bayar saat tanggal 3, hari ini tanggal 2, inputnya tanggal 3
 	    getBankDatabase().monthlyPayment();
 	    return ADMIN_TAX_PAID;
@@ -107,7 +99,6 @@ public class SystemDate extends Transaction {
 	    getBankDatabase().monthlyPayment();
 	    return ADMIN_TAX_PAID;
 	}
-
 	return ADMIN_TAX_NOT_PAID;
     }
 

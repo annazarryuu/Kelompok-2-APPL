@@ -39,7 +39,6 @@ public class Transfer extends Transaction {
 	    } else {
 		account.debit(amount + paymentTax);
 		target.debit(-1 * amount);
-		getBankDatabase().addBankStatement(this);
 		getBankDatabase().addBankStatement(new Statement(this, TRANSFER));
 		return TRANSFER_SUCCESS;
 	    }

@@ -17,11 +17,9 @@ import java.util.Date;
 public class BankDatabase {
 
     private ArrayList<Account> accounts; // array of Accounts
-    private ArrayList<Transaction> bankStatements;
     private ArrayList<Statement> bankStatements;
 
     public BankDatabase() {
-	bankStatements = new ArrayList<Transaction>();
 	bankStatements = new ArrayList<Statement>();
 	accounts = new ArrayList<Account>();
 	accounts.add(new Account(00000, 00000, 0.0, 0.0, ADMIN));
@@ -40,13 +38,10 @@ public class BankDatabase {
 	return null; // if no matching account was found, return null
     }
 
-    public ArrayList<Transaction> getBankStatement(int accountNumber) {
-	ArrayList<Transaction> result = new ArrayList<Transaction>();
     public ArrayList<Statement> getBankStatement(int accountNumber) {
 	ArrayList<Statement> result = new ArrayList<Statement>();
 
 	for (int i = 0; i < bankStatements.size(); i++) {
-	    if (bankStatements.get(i).getAccountNumber() == accountNumber) {
 	    if (bankStatements.get(i).getTransaction().getAccountNumber() == accountNumber) {
 		result.add(bankStatements.get(i));
 	    }
@@ -55,8 +50,6 @@ public class BankDatabase {
 	return result.isEmpty() ? null : result;
     }
     
-    public void addBankStatement(Transaction theTransaction) {
-	bankStatements.add(theTransaction);
 
     public ArrayList<Statement> getBankStatementMonth(int accountNumber, int month) {
 	ArrayList<Statement> result = new ArrayList<Statement>();

@@ -35,7 +35,6 @@ public class Deposit extends Transaction {
 	if (depositSlot.isEnvelopeReceived()) {
 	    Account account = getBankDatabase().getAccount(getAccountNumber());
 	    account.credit(amount);
-	    getBankDatabase().addBankStatement(this);
 	    getBankDatabase().addBankStatement(new Statement(this, DEPOSIT));
 	    return DEPOSIT_SUCCESS;
 	} else {

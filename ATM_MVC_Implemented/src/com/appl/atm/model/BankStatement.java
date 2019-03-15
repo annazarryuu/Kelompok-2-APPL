@@ -14,12 +14,10 @@ import java.util.ArrayList;
  * @author Annazar
  */
 public class BankStatement extends Transaction {
-    
+
     private Keypad keypad;
 
     public BankStatement(int userAccountNumber, Screen atmScreen,
-	    BankDatabase atmBankDatabase) {
-	
 	    BankDatabase atmBankDatabase, Keypad atmKeypad) {
 
 	super(userAccountNumber, atmScreen, atmBankDatabase);
@@ -30,8 +28,6 @@ public class BankStatement extends Transaction {
     public int execute() {
 	return 0;
     }
-    
-    public ArrayList<Transaction> getBankStatements() {
 
     public ArrayList<Statement> getBankStatements() {
 	return getBankDatabase().getBankStatement(getAccountNumber());
@@ -63,6 +59,5 @@ public class BankStatement extends Transaction {
     public String toString() {
 	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 
 }

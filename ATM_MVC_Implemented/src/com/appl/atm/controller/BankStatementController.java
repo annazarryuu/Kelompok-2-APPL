@@ -29,9 +29,6 @@ public class BankStatementController extends TransactionController {
 
     @Override
     public int run() {
-	ArrayList<Transaction> bankStatement = transaction.getBankStatements();
-	
-	if(bankStatement == null) {
 	ArrayList<Statement> bankStatement = new ArrayList<Statement>();
 
 	getScreen().displayMessageLine("\nBank statements menu :");
