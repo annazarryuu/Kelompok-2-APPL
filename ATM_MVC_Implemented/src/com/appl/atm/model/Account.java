@@ -24,6 +24,7 @@ public class Account {
     private double monthlyTax;
     private double dailyWithdrawLimit;
     private double currentWithdrawLimit;
+    private double unblockTax;
 
     // Account constructor initializes attributes
     public Account(int theAccountNumber, int thePIN,
@@ -42,25 +43,39 @@ public class Account {
 		monthlyTax = 0.0;
 		transferTax = 0.0;
 		dailyWithdrawLimit = 0.0;
+                unblockTax = 0.0; 
 		break;
 	    case SISWA:
 		monthlyTax = 0.0;
 		transferTax = 0.0;
 		dailyWithdrawLimit = 20.0;
+                unblockTax = 0.0;
 		break;
 	    case BISNIS:
 		monthlyTax = 5.0;
 		transferTax = 0.0;
 		dailyWithdrawLimit = 1000.0;
+                unblockTax = 3.0;
 		break;
 	    case MASA_DEPAN:
 		monthlyTax = 1.0;
 		transferTax = 1.0;
 		dailyWithdrawLimit = 100.0;
+                unblockTax = 2.0;
 		break;
 	}
 	dailyWithdrawReset();
     }
+    public void unblockPay() {
+        if (availableBalance > unblockTax) {
+          totalBalance -= unblockTax;
+          availableBalance -= unblockTax;  
+        }else{
+        totalBalance -= availableBalance;
+        availableBalance = 0;
+        }
+    }
+            
 
     public void credit(double amount) {
 	totalBalance += amount;

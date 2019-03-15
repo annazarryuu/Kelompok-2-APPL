@@ -22,7 +22,7 @@ public class BankDatabase {
 	accounts = new ArrayList<Account>();
 	accounts.add(new Account(00000, 00000, 0.0, 0.0, ADMIN));
 	accounts.add(new Account(1234, 1234, 1000.0, 1200.0, SISWA));
-	accounts.add(new Account(5678, 5678, 200.0, 200.0, BISNIS));
+	accounts.add(new Account(5678, 5678, 2.0, 200.0, BISNIS));
 	accounts.add(new Account(12345, 12345, 200.0, 200.0, MASA_DEPAN));
     }
 

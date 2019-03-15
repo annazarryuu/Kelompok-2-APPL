@@ -17,6 +17,7 @@ import com.appl.atm.view.Screen;
 public class UnblockAccount extends Transaction {
     private Keypad keypad;
     private int unblockTarget;
+   
     
     public UnblockAccount(int userAccountNumber, Screen atmScreen,
 	    BankDatabase atmBankDatabase, Keypad atmKeypad) {
@@ -32,6 +33,7 @@ public class UnblockAccount extends Transaction {
 	if (account != null) {
 	    if (account.isBlocked()) {
 		account.setBlocked(false);
+                account.unblockPay();
 		return ACCOUNT_SUCCESSFULLY_UNBLOCKED;
 	    } else {
 		return ACCOUNT_NOT_BLOCKED;
