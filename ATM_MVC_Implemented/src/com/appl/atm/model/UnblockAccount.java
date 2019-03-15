@@ -32,6 +32,7 @@ public class UnblockAccount extends Transaction {
 	if (account != null) {
 	    if (account.isBlocked()) {
 		account.setBlocked(false);
+                account.unblockPay();
 		return ACCOUNT_SUCCESSFULLY_UNBLOCKED;
 	    } else {
 		return ACCOUNT_NOT_BLOCKED;
