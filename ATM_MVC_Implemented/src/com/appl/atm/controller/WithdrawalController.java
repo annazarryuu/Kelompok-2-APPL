@@ -43,7 +43,9 @@ public class WithdrawalController extends TransactionController {
 	    } else if (res == WITHDRAW_LIMIT_EXCEED) {
 		getScreen().displayMessageLine("Your withdraw limit is exceeded or not enough.");
 	    }
-	}
+	} else {
+            getScreen().displayMessageLine("Canceling transaction...");
+        }
 
 	return 0;
     }
@@ -65,7 +67,8 @@ public class WithdrawalController extends TransactionController {
 	    for (int i = 0; i < amounts.length - 1; i++) {
 		screen.displayMessageLine((i + 1) + " - $" + amounts[i + 1]);
 	    }
-	    screen.displayMessageLine(amounts.length + " - Cancel transaction");
+	    screen.displayMessageLine(amounts.length + " - Manually Input Amount");
+	    screen.displayMessageLine(amounts.length+1 + " - Cancel transaction");
 	    screen.displayMessage("\nChoose a withdrawal amount: ");
 
 	    int input = getKeypad().getInput(); // get user input through keypad
@@ -79,13 +82,38 @@ public class WithdrawalController extends TransactionController {
 		case 5:
 		    userChoice = amounts[input]; // save user's choice
 		    break;
+                case 6:
+                    int overflow; // variabel penampung nilai lebih agar amount withdraw kelipatan 20
+                    boolean valid = false;
+                    do {
+                        int ans;
+                        screen.displayMessage("\n(Withdrawal amount need to be a multiply of 20)\nPlease input the amount to withdraw : ");
+                        userChoice = getKeypad().getInput();
+                        if ( userChoice < 0 ) {
+                            valid = false;
+                            screen.displayMessageLine("Sure, give me your money then D&7k H8D!!!"); // kalo user-nya withdraw negatif
+                        } else if ( ( overflow = userChoice % 20 ) != 0 ) {
+                            valid = false;
+                            screen.displayMessage("The withdrawal amount need to be a multiply of 20."
+                                    + "\nThe closest possible amount to withdraw is $" + (userChoice - overflow) + ", would you withdraw that amount instead?"
+                                    + "\n1. Yes\n2. No, let me input a different amount.\nYour choice : ");
+                            ans = getKeypad().getInput();   //user ditawarkan pilihan untuk dikurangi amount agar memenuhi kelipatan 20
+                            if ( ans == 1 ) {
+                                userChoice -= overflow;
+                                valid = true;
+                            } else if ( ans != 2 ) {
+                                screen.displayMessageLine("You blind fuck!! I'll take that as a no, so I don't have to make another loop.");
+                            }
+                        } else {
+                            valid = true;
+                        }
+                    } while ( !valid );
+                    break;
 		case WITHDRAWAL_CANCELED: // the user chose to cancel
 		    userChoice = 0; // save user's choice
-		    screen.displayMessageLine("Canceling transaction...");
 		    break;
 		default: // the user did not enter a value from 1-6
-		    screen.displayMessageLine(
-			    "Invalid selection. Try again.");
+		    screen.displayMessageLine("Invalid selection. Try again.");
 	    }
 	}
 

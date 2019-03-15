@@ -29,7 +29,7 @@ public final class Constants {
     public static final int CHANGE_DATE = 12;
 
     // cancelled condition
-    public static final int WITHDRAWAL_CANCELED = 6;
+    public static final int WITHDRAWAL_CANCELED = 7;
     public static final int DEPOSIT_CANCELED = 0;
     public static final int TRANSFER_CANCELED = 0;
     
