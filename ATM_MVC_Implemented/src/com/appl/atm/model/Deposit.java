@@ -36,6 +36,7 @@ public class Deposit extends Transaction {
 	    Account account = getBankDatabase().getAccount(getAccountNumber());
 	    account.credit(amount);
 	    getBankDatabase().addBankStatement(this);
+	    getBankDatabase().addBankStatement(new Statement(this, DEPOSIT));
 	    return DEPOSIT_SUCCESS;
 	} else {
 	    return ENVELOPE_NOT_RECEIVED;
