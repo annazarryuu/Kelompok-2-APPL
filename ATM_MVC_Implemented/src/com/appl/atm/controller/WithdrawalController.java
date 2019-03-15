@@ -114,10 +114,6 @@ public class WithdrawalController extends TransactionController {
 		    break;
 		default: // the user did not enter a value from 1-6
 		    screen.displayMessageLine("Invalid selection. Try again.");
-		case WITHDRAWAL_CANCELED: // the user chose to cancel
-		    userChoice = 0; // save user's choice
-		    screen.displayMessageLine("Canceling transaction...");
-		    break;
 	    }
 	}
 
