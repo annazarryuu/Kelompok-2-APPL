@@ -31,7 +31,6 @@ public final class Constants {
     // cancelled condition
     public static final int WITHDRAWAL_CANCELED = 6;
     public static final int DEPOSIT_CANCELED = 0;
-    public static final int TRANSFER_CANCELED = 0;
     
     // account type
     public static final int ADMIN = 0;
@@ -51,17 +50,12 @@ public final class Constants {
 
     // withdrawal
     public static final int WITHDRAWAL_SUCCESS = 0;
-    public static final int ACCOUNT_BALANCE_NOT_SUFFICIENT = 1;
-    public static final int CASH_DISPENSER_NOT_SUFFICIENT = 2;
+    public static final int ACCOUNT_BALANCE_SUFFICIENT = 1;
+    public static final int CASH_DISPENSER_SUFFICIENT = 2;
 
     // deposit
     public static final int DEPOSIT_SUCCESS = 0;
     public static final int ENVELOPE_NOT_RECEIVED = 1;
-    
-    // transfer
-    public static final int TRANSFER_SUCCESS = 0;
-    public static final int NEGATIVE_AMOUNT = 2;
-    public static final int SAME_ACCOUNT_NUMBER = 3;
     
     // validate deposit
     public static final int DEPOSIT_VALIDATE_SUCCESS = 0;
@@ -73,8 +67,4 @@ public final class Constants {
     // add account
     public static final int ACCOUNT_SUCCESSFULLY_CREATED = 0;
     public static final int ACCOUNT_EXIST = 1;
-    
-    //change PIN
-    public static final int PIN_CHANGED_SUCCESSFULLY = 0;
-    public static final int SAME_PIN_AS_BEFORE = 1;
 }

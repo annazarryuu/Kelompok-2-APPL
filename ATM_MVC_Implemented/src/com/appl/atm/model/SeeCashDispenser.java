@@ -10,14 +10,12 @@ import com.appl.atm.view.Screen;
  *
  * @author Asus-Pro
  */
-public class CheckCashDispenser extends Transaction{
+public class SeeCashDispenser extends Transaction{
     
     private CashDispenser cashDispenser; // reference to cash dispenser
 
-    public CheckCashDispenser(int userAccountNumber, Screen atmScreen,
-	    BankDatabase atmBankDatabase, CashDispenser atmCashDispenser) {
-        
-	super(userAccountNumber, atmScreen, atmBankDatabase);
+    public SeeCashDispenser(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase, CashDispenser atmCashDispenser) {
+        super(userAccountNumber, atmScreen, atmBankDatabase);
         cashDispenser = atmCashDispenser;
     }
     

@@ -34,11 +34,11 @@ public class WithdrawalController extends TransactionController {
 	    transaction.setAmount(amount);
 	    int res = transaction.execute();
 
-	    if (res == WITHDRAWAL_SUCCESS) {
+	    if (res == 0) {
 		getScreen().displayMessageLine("Your cash has been dispensed. Please take your cash now.");
-	    } else if (res == ACCOUNT_BALANCE_NOT_SUFFICIENT) {
+	    } else if (res == 1) {
 		getScreen().displayMessageLine("Your balance isn't enough for this withdrawal.");
-	    } else if (res == CASH_DISPENSER_NOT_SUFFICIENT) {
+	    } else if (res == 2) {
 		getScreen().displayMessageLine("Cash dispenser doesn't have sufficient amount of cash.");
 	    }
 	}

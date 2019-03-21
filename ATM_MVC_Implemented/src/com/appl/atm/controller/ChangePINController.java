@@ -9,7 +9,6 @@ import com.appl.atm.model.Account;
 import com.appl.atm.model.BankDatabase;
 import com.appl.atm.model.ChangePIN;
 import com.appl.atm.model.Transaction;
-import static com.appl.atm.model.Constants.*;
 import com.appl.atm.view.Keypad;
 import com.appl.atm.view.Screen;
 
@@ -46,13 +45,14 @@ public class ChangePINController extends TransactionController{
         screen.displayMessage("Please input your current PIN : ");
         currPIN = getKeypad().getInput();
         if(currAcc.getPin() == currPIN) {
-            do {
+            do{
                 screen.displayMessage("Please input your new PIN : ");
                 newPIN = getKeypad().getInput();
                 if(currPIN == newPIN) {
                     screen.displayMessageLine("New PIN cannot be same as the old PIN.");
                 } else return newPIN;
-            } while(currPIN == newPIN);
+            }while(currPIN == newPIN);
+            
         }
         
         return 0;
