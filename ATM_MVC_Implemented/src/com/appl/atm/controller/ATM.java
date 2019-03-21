@@ -52,6 +52,7 @@ public class ATM {
 	depositSlot = new DepositSlot();
 	bankDatabase = new BankDatabase();
 	menuList = new ArrayList<Menu>();
+	systemDate = new SystemDate(currentAccountNumber, screen, bankDatabase, keypad);
 //        systemDate = new SystemDate();
 	createMenuList();
     }
@@ -302,9 +303,6 @@ public class ATM {
 		temp = new ChangePIN(currentAccountNumber, screen, bankDatabase, keypad);
 		break;
 	    case CHANGE_DATE:
-		if (systemDate == null) {
-		    systemDate = new SystemDate(currentAccountNumber, screen, bankDatabase, keypad);
-		}
 		temp = systemDate;
 		break;
 	    case BANK_STATEMENT:

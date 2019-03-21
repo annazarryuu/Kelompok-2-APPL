@@ -69,7 +69,7 @@ public class Statement implements Comparable<Statement>{
     @Override
     public int compareTo(Statement o) {
 	if (transacionType == WITHDRAWAL) {
-	    return Integer.compare(((Withdrawal) getTransaction()).getAmount(), ((Withdrawal) o.getTransaction()).getAmount());
+	    return -1 * Integer.compare(((Withdrawal) getTransaction()).getAmount(), ((Withdrawal) o.getTransaction()).getAmount());
 	}
 	
 	return 0;

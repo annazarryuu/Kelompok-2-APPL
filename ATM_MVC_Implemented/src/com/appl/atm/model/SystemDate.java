@@ -25,8 +25,6 @@ public class SystemDate extends Transaction {
 
 	super(userAccountNumber, atmScreen, atmBankDatabase);
 	keypad = atmKeypad;
-	prevDate = new Date(System.currentTimeMillis());
-	currDate = new Date(System.currentTimeMillis());
 	if (prevDate == null) {
 	    prevDate = new Date(System.currentTimeMillis());
 	}
@@ -37,26 +35,17 @@ public class SystemDate extends Transaction {
 
     @Override
     public int execute() {
-	if (currDate.compareTo(prevDate) < 0) {
+
+	if (currDate.compareTo(prevDate) < 0) { //waktu yg di input < prevDate
 	    currDate = prevDate;
 	    return TIME_REWIND;
-	} else if (currDate.compareTo(prevDate) > 0) {
+	} else if (currDate.compareTo(prevDate) > 0) { //waktu yg di input > prevDate
 	    int res = this.dateCheck();
-	    getBankDatabase().dailyWithdrawReset();
+	    getBankDatabase().dailyWithdrawReset(); //reset withdraw tiap akun
 	    prevDate = currDate;
-	    return res == ADMIN_TAX_PAID ? res : DATE_CHANGED_SUCCESSFULLY;
-	} else {
-	    if (currDate.compareTo(prevDate) < 0) { //waktu yg di input < prevDate
-		currDate = prevDate;
-		return TIME_REWIND;
-	    } else if (currDate.compareTo(prevDate) > 0) { //waktu yg di input > prevDate
-		int res = this.dateCheck();
-		getBankDatabase().dailyWithdrawReset(); //reset withdraw tiap akun
-		prevDate = currDate;
-		return res == ADMIN_TAX_PAID ? res : DATE_CHANGED_SUCCESSFULLY; //penentuan input waktu sukses atau tidak
-	    } else { //waktu yang di input == prevDate
-		return TIME_DOESNT_CHANGED;
-	    }
+	    return res == ADMIN_TAX_PAID ? res : DATE_CHANGED_SUCCESSFULLY; //penentuan input waktu sukses atau tidak
+	} else { //waktu yang di input == prevDate
+	    return TIME_DOESNT_CHANGED;
 	}
     }
 

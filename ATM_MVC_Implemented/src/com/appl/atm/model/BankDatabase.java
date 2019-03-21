@@ -64,7 +64,6 @@ public class BankDatabase {
 	}
 
 	Collections.sort(result);
-	Collections.reverse(result);
 	return result.isEmpty() ? null : result;
     }
 
