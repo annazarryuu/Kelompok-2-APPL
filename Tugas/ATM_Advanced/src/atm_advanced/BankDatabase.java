@@ -7,7 +7,7 @@ public class BankDatabase {
    private int current_account_count;
    public BankDatabase() {
       accounts = new Account[maxAccountCount]; // just 2 accounts for testing
-      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false, 2);
+      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false, 1);
       accounts[1] = new Account(8765, 5678, 200.0, 200.0, false, 1);
       accounts[2] = new Account(00000, 00000, 0.0, 0.0, false, 0);
       current_account_count = INITIAL_ACCOUNT_COUNT; //jumlah akun pertama-tama diisi INITITAL_ACCOUNT_COUNT
@@ -111,6 +111,7 @@ public class BankDatabase {
            current_account_count++;
         }
    }
+<<<<<<< HEAD
    
    public void monthlyPayment()
    {
@@ -119,4 +120,6 @@ public class BankDatabase {
 	   accounts[i].monthlyPayment();
        }
    }
+=======
+>>>>>>> parent of 1c1c97f... Beberapa perubahan :
 } 

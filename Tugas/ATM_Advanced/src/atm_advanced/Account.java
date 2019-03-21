@@ -7,9 +7,13 @@ public class Account {
    private double totalBalance; // funds available & pending deposits
    private boolean isBlocked; //Status Nasabah
    private int accType;
+<<<<<<< HEAD
    private double transferTax;
    private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
 
+=======
+   
+>>>>>>> parent of 1c1c97f... Beberapa perubahan :
    // Account constructor initializes attributes
    public Account(int theAccountNumber, int thePIN, 
       double theAvailableBalance, double theTotalBalance,
@@ -20,7 +24,6 @@ public class Account {
       totalBalance = theTotalBalance;
       isBlocked = status;
       accType = theAccType;
-      transferTax = transferTaxes[accType];
    }
 
    // determines whether a user-specified PIN matches PIN in Account
@@ -79,6 +82,10 @@ public class Account {
    public int getAccType(){
        return accType;
    }
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 1c1c97f... Beberapa perubahan :
 } 
 /*
 -> diwaktu luang belajar
