@@ -102,12 +102,12 @@ public class BankDatabase {
        System.out.println("masuk");
       getAccountByAdmin(userAccountNumber).setIsBlocked(false);
    }
-   public void addAccount(int userAccountNumber, int userPIN, int accType) {
+   public void addAccount(int userAccountNumber, int userPIN) {
         if(current_account_count > maxAccountCount-1){ //maksimal 50 akun
             System.out.println("You can`t add new account because the database is full.");
         } else {
            System.out.println("Account successfully created.");
-           accounts[current_account_count] = new Account(userAccountNumber, userPIN, 0, 0, false, accType);
+           accounts[current_account_count] = new Account(userAccountNumber, userPIN, 0, 0, false, 1);        
            current_account_count++;
         }
    }

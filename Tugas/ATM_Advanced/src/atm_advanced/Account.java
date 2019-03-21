@@ -7,7 +7,6 @@ public class Account {
    private double totalBalance; // funds available & pending deposits
    private boolean isBlocked; //Status Nasabah
    private int accType;
-   private double monthlyTax;
    private double transferTax;
    private final double[] transferTaxes = {0.0, 0.0, 0.0, 1.0}; //untuk akun masa depan, biaya transfer = $1
 
@@ -20,13 +19,6 @@ public class Account {
       availableBalance = theAvailableBalance;
       totalBalance = theTotalBalance;
       isBlocked = status;
-      switch(theAccType) {
-          case 0 : monthlyTax = 0.0; break;
-          case 1 : monthlyTax = 0.0; break;
-          case 2 : monthlyTax = 5.0; break;
-          case 3 : monthlyTax = 1.0; break;
-      }
-      
       accType = theAccType;
       transferTax = transferTaxes[accType];
    }
@@ -77,8 +69,7 @@ public class Account {
    
    public void monthlyPayment()
    {
-       this.availableBalance = this.availableBalance - monthlyTax;
-       this.totalBalance = this.totalBalance - monthlyTax;
+       
    }
 
     public double getTransferTax() {
