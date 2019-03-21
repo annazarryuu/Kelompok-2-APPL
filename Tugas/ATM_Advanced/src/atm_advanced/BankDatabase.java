@@ -2,14 +2,20 @@ package atm_advanced;
 
 public class BankDatabase {
    private Account[] accounts; // array of Accounts
-   private int maxAccountCount = 50;
-   private int INITIAL_ACCOUNT_COUNT = 3; //pertama-tama, hanya ada 3 akun di database
-   private int current_account_count;
+   private static final int maxAccountCount = 50;
+   private static final int INITIAL_ACCOUNT_COUNT = 3; //pertama-tama, hanya ada 3 akun di database
+   private static int current_account_count;
    public BankDatabase() {
       accounts = new Account[maxAccountCount]; // just 2 accounts for testing
+<<<<<<< HEAD
       accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false, 1);
+      accounts[1] = new Account(8765, 5678, 80.0, 700.0, false, 2);
+      accounts[2] = new Account(00000, 00000, 0.0, 0.0, false, 3);
+=======
+      accounts[0] = new Account(12345, 54321, 1000.0, 1200.0, false, 2);
       accounts[1] = new Account(8765, 5678, 200.0, 200.0, false, 1);
       accounts[2] = new Account(00000, 00000, 0.0, 0.0, false, 0);
+>>>>>>> Advanced
       current_account_count = INITIAL_ACCOUNT_COUNT; //jumlah akun pertama-tama diisi INITITAL_ACCOUNT_COUNT
    }
    
@@ -102,24 +108,34 @@ public class BankDatabase {
        System.out.println("masuk");
       getAccountByAdmin(userAccountNumber).setIsBlocked(false);
    }
-   public void addAccount(int userAccountNumber, int userPIN) {
+   public void addAccount(int userAccountNumber, int userPIN, int accType) {
         if(current_account_count > maxAccountCount-1){ //maksimal 50 akun
             System.out.println("You can`t add new account because the database is full.");
         } else {
            System.out.println("Account successfully created.");
-           accounts[current_account_count] = new Account(userAccountNumber, userPIN, 0, 0, false, 1);        
+<<<<<<< HEAD
+           accounts[current_account_count] = new Account(userAccountNumber, userPIN, 0, 0, false, accType);        
+=======
+           accounts[current_account_count] = new Account(userAccountNumber, userPIN, 0, 0, false, accType);
+>>>>>>> Advanced
            current_account_count++;
         }
    }
-<<<<<<< HEAD
    
+<<<<<<< HEAD
+   public boolean transfer(int accountNumber, double amounts) {
+       return getAccount(accountNumber).decTransferLimit(amounts);
+   }
+   
+   public boolean withdraw(int accountNumber, double amounts) {
+       return getAccount(accountNumber).decWithdrawLimit(amounts);
+=======
    public void monthlyPayment()
    {
        for (int i = 0; i < current_account_count; i++)
        {
 	   accounts[i].monthlyPayment();
        }
+>>>>>>> Advanced
    }
-=======
->>>>>>> parent of 1c1c97f... Beberapa perubahan :
 } 

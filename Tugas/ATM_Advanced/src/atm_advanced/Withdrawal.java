@@ -24,8 +24,8 @@ public class Withdrawal extends Transaction {
    public void execute() {
        Screen screen = getScreen();
        BankDatabase bankDatabase = getBankDatabase();
-       amount = displayMenuOfAmounts();
-       if(cashDispenser.isSufficientCashAvailable(amount)){
+       amount = displayMenuOfAmounts(bankDatabase);
+       if( cashDispenser.isSufficientCashAvailable(amount) && amount != 6 ){
             bankDatabase.debit(getAccountNumber(), amount); //kurangi saldo dari akun
             cashDispenser.dispenseCash(amount); //kurangi uang yang ada di dispensers
             screen.displayMessageLine("Your cash has been dispensed. Please take your cash now.");
@@ -36,28 +36,43 @@ public class Withdrawal extends Transaction {
 
    // display a menu of withdrawal amounts and the option to cancel;
    // return the chosen amount or 0 if the user chooses to cancel
-   private int displayMenuOfAmounts() {
+   private int displayMenuOfAmounts(BankDatabase bankDatabase) {
       int userChoice = 0; // local variable to store return value
+      boolean validator;
 
       Screen screen = getScreen(); // get screen reference
       
       // array of amounts to correspond to menu numbers
       int[] amounts = {0, 20, 40, 60, 100, 200};
+      int input;
 
       // loop while no valid choice has been made
       while (userChoice == 0) {
          // display the withdrawal menu
-         screen.displayMessageLine("\nWithdrawal Menu:");
-         screen.displayMessageLine("1 - $20");
-         screen.displayMessageLine("2 - $40");
-         screen.displayMessageLine("3 - $60");
-         screen.displayMessageLine("4 - $100");
-         screen.displayMessageLine("5 - $200");
-         screen.displayMessageLine("6 - Cancel transaction");
-         screen.displayMessage("\nChoose a withdrawal amount: ");
+         do {
+            screen.displayMessageLine("\nWithdrawal Menu:");
+            screen.displayMessageLine("1 - $20");
+            screen.displayMessageLine("2 - $40");
+            screen.displayMessageLine("3 - $60");
+            screen.displayMessageLine("4 - $100");
+            screen.displayMessageLine("5 - $200");
+            screen.displayMessageLine("6 - Cancel transaction");
+            screen.displayMessage("\nChoose a withdrawal amount: ");
 
-         int input = keypad.getInput(); // get user input through keypad
-
+            input = keypad.getInput(); // get user input through keypad
+            
+            if ( input == 6 ) {
+                validator = true;
+            } else if ( amounts[input] > bankDatabase.getAvailableBalance(super.getAccountNumber()) ) {
+                validator = false;
+                screen.displayMessage("You don't have that much money lol!\n");
+            } else if ( !bankDatabase.withdraw(super.getAccountNumber(), amounts[input]) ) {
+                validator = false;
+            } else {
+                validator = true;
+            }
+         } while ( !validator );
+         
          // determine how to proceed based on the input value
          switch (input) {
             case 1: // if the user chose a withdrawal amount 

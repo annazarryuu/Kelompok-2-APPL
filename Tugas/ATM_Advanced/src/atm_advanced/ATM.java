@@ -176,43 +176,36 @@ public class ATM {
       } 
    } 
     // display the main menu and return an input selection
-    private int displayMainMenu() {
-        String[] arrayPilihan = new String[JUMLAH_PILIHAN];
+    private int displayMainMenu() { //dynamic main menu
         int[] arrayNoPilihan = new int[JUMLAH_PILIHAN];
+        String[] accType = new String[4];
+        accType[0] = "Admin";
+        accType[1] = "Siswa";
+        accType[2] = "Bisnis";
+        accType[3] = "Masa Depan";
         int j = 0;
         Account tempAccount = bankDatabase.getAccount(currentAccountNumber);
         for(int i = 0; i < JUMLAH_PILIHAN; i++){
-            if(tempAccount.getAccType() == 0){
-                if(menuPilihan[i].getForAdmin() == true){
-                    arrayPilihan[j] = menuPilihan[i].getketeranganPilihan();
-                    arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
-                    j++;
-                }
-            } else if(tempAccount.getAccType() == 1){
-                if(menuPilihan[i].getForSiswa() == true){
-                    arrayPilihan[j] = menuPilihan[i].getketeranganPilihan();
-                    arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
-                    j++;
-                }
-            } else if(tempAccount.getAccType() == 2){
-                if(menuPilihan[i].getForBisnis() == true){
-                    arrayPilihan[j] = menuPilihan[i].getketeranganPilihan();
-                    arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
-                    j++;
-                }
-            } else if(tempAccount.getAccType() == 3){
-                if(menuPilihan[i].getForBisnis() == true){
-                    arrayPilihan[j] = menuPilihan[i].getketeranganPilihan();
-                    arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
-                    j++;
-                }
+            if(tempAccount.getAccType() == 0 && menuPilihan[i].getForAdmin() == true){
+                arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
+                j++;
+            } else if(tempAccount.getAccType() == 1 && menuPilihan[i].getForSiswa() == true){
+                arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
+                j++;
+            } else if(tempAccount.getAccType() == 2 && menuPilihan[i].getForBisnis() == true){
+                arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
+                j++;
+            } else if(tempAccount.getAccType() == 3 && menuPilihan[i].getForBisnis() == true){
+                arrayNoPilihan[j] = menuPilihan[i].getNoPilihan();
+                j++;
             }
         }
         arrayNoPilihan[j] = 10; j++;
+        screen.displayMessageLine("\nWelcome, your account type : " + accType[tempAccount.getAccType()]);
         for(int i = 0; i < j-1; i++){
             screen.displayMessage(String.valueOf(i+1));
             screen.displayMessage(". ");
-            screen.displayMessage(menuPilihan[arrayNoPilihan[i]-1].getketeranganPilihan() + "\n");
+            screen.displayMessageLine(menuPilihan[arrayNoPilihan[i]-1].getketeranganPilihan());
         }
         
         screen.displayMessage("Enter a choice: ");
@@ -273,5 +266,3 @@ public class ATM {
     }
     
 }
-//bikin array A
-//loop dari array menuPilihan, kalo true, masukin array A

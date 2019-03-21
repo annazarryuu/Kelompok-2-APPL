@@ -21,12 +21,14 @@ import com.appl.atm.view.Keypad;
 public class DepositCashDispenser extends Transaction{
     
     CashDispenser cashDispenser;
-    double keypadInput;
+    private double keypadInput;
     private Keypad keypad; // reference to keypad
     private final static int CANCELED = 0;
 
-    public DepositCashDispenser(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase, CashDispenser atmCashDispenser, Keypad atmKeypad) {
-        super(userAccountNumber, atmScreen, atmBankDatabase);
+    public DepositCashDispenser(int userAccountNumber, Screen atmScreen,
+	    BankDatabase atmBankDatabase, CashDispenser atmCashDispenser, Keypad atmKeypad) {
+        
+	super(userAccountNumber, atmScreen, atmBankDatabase);
         cashDispenser = atmCashDispenser;
         keypad = atmKeypad;
     }
@@ -54,5 +56,10 @@ public class DepositCashDispenser extends Transaction{
             }
         }
         return (int) keypadInput / 20;
+    }
+
+    @Override
+    public String toString() {
+	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

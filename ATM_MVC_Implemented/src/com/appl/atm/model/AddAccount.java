@@ -102,4 +102,9 @@ public class AddAccount extends Transaction {
     public void setNewType(int newType) {
 	this.newType = newType;
     }
+
+    @Override
+    public String toString() {
+	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

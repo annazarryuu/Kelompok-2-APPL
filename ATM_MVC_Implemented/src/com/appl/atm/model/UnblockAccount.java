@@ -32,6 +32,7 @@ public class UnblockAccount extends Transaction {
 	if (account != null) {
 	    if (account.isBlocked()) {
 		account.setBlocked(false);
+                account.unblockPay();
 		return ACCOUNT_SUCCESSFULLY_UNBLOCKED;
 	    } else {
 		return ACCOUNT_NOT_BLOCKED;
@@ -67,6 +68,11 @@ public class UnblockAccount extends Transaction {
      */
     public void setUnblockTarget(int unblockTarget) {
 	this.unblockTarget = unblockTarget;
+    }
+
+    @Override
+    public String toString() {
+	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

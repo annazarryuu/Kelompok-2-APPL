@@ -12,7 +12,7 @@ import static com.appl.atm.model.Constants.*;
  * @author Annazar
  */
 public class Account {
-    
+
     private int accountNumber; // account number
     private int pin; // PIN for authentication
     private double availableBalance; // funds available for withdrawal
@@ -20,6 +20,11 @@ public class Account {
     private boolean blocked;
     private int triedCount;
     private int accountType;
+    private double transferTax;
+    private double monthlyTax;
+    private double dailyWithdrawLimit;
+    private double currentWithdrawLimit;
+    private double unblockTax;
 
     // Account constructor initializes attributes
     public Account(int theAccountNumber, int thePIN,
@@ -33,6 +38,42 @@ public class Account {
 	accountType = theAccountType;
 	blocked = false;
 	triedCount = 0;
+	switch (accountType) {
+	    case ADMIN:
+		monthlyTax = 0.0;
+		transferTax = 0.0;
+		dailyWithdrawLimit = 0.0;
+                unblockTax = 0.0; 
+		break;
+	    case SISWA:
+		monthlyTax = 0.0;
+		transferTax = 0.0;
+		dailyWithdrawLimit = 20.0;
+                unblockTax = 0.0;
+		break;
+	    case BISNIS:
+		monthlyTax = 5.0;
+		transferTax = 0.0;
+		dailyWithdrawLimit = 1000.0;
+                unblockTax = 3.0;
+		break;
+	    case MASA_DEPAN:
+		monthlyTax = 1.0;
+		transferTax = 1.0;
+		dailyWithdrawLimit = 100.0;
+                unblockTax = 2.0;
+		break;
+	}
+	dailyWithdrawReset();
+    }
+    public void unblockPay() {
+        if (availableBalance > unblockTax) {
+          totalBalance -= unblockTax;
+          availableBalance -= unblockTax;  
+        }else{
+        totalBalance -= availableBalance;
+        availableBalance = 0;
+        }
     }
 
     public void credit(double amount) {
@@ -40,6 +81,7 @@ public class Account {
     }
 
     public void debit(double amount) {
+	currentWithdrawLimit -= amount;
 	availableBalance -= amount;
 	totalBalance -= amount;
     }
@@ -142,6 +184,38 @@ public class Account {
      */
     public void setBlocked(boolean blocked) {
 	this.blocked = blocked;
+    }
+
+    public double getTransferTax() {
+	return transferTax;
+    }
+
+    public void monthlyPayment() {
+	if (this.availableBalance > monthlyTax) {
+	    this.totalBalance = this.totalBalance - monthlyTax;
+	    this.availableBalance = this.availableBalance - monthlyTax;
+	} else {
+	    this.totalBalance = this.totalBalance - this.availableBalance;
+	    this.availableBalance = 0;
+	}
+    }
+    
+    public void dailyWithdrawReset() {
+	currentWithdrawLimit = dailyWithdrawLimit;
+    }
+
+    /**
+     * @return the currentWithdrawLimit
+     */
+    public double getCurrentWithdrawLimit() {
+	return currentWithdrawLimit;
+    }
+
+    /**
+     * @param currentWithdrawLimit the currentWithdrawLimit to set
+     */
+    public void setCurrentWithdrawLimit(double currentWithdrawLimit) {
+	this.currentWithdrawLimit = currentWithdrawLimit;
     }
 
 }

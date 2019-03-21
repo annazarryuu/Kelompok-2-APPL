@@ -25,9 +25,9 @@ public Transfer( int accountNumber, Screen screen, Keypad keypadn, BankDatabase 
     BankDatabase bankDatabase = getBankDatabase();
     
     displayMenuOfAmounts(bankDatabase);
-    if (amounts != 0) {
+    if (amounts > 0) {
         bankDatabase.debit(targetAccount, amounts*-1);
-        bankDatabase.debit(getAccountNumber(), amounts);
+        bankDatabase.debit(getAccountNumber(), amounts+(int)bankDatabase.getTransferTax(getAccountNumber()));
     }
 }
 
@@ -57,9 +57,17 @@ public Transfer( int accountNumber, Screen screen, Keypad keypadn, BankDatabase 
         amounts = keypad.getInput();
 	amounts = amounts + (int)getBankDatabase().getTransferTax(getAccountNumber());
         if (amounts < 0) {
+            validator = false;
             screen.displayMessage("Yeah, go F7ck your self!\n");
+        } else if ( amounts >= bankDatabase.getAvailableBalance(super.getAccountNumber()) ) {
+            validator = false;
+            screen.displayMessage("You're too poor to do that!\n");            
+        } else if ( !bankDatabase.transfer(super.getAccountNumber(), amounts) ) {
+            validator = false;
+        } else {
+            validator = true;
         }
-      } while (amounts < 0);
+      } while ( !validator );
       
       return 0;
       

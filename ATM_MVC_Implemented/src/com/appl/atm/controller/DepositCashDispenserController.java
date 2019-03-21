@@ -7,7 +7,7 @@
 package com.appl.atm.controller;
 
 import com.appl.atm.model.DepositCashDispenser;
-import com.appl.atm.model.SeeCashDispenser;
+import com.appl.atm.model.CheckCashDispenser;
 import com.appl.atm.model.Transaction;
 
 /**

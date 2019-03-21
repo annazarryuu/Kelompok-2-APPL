@@ -63,5 +63,10 @@ public class ValidateDeposit extends Transaction {
     public void setValidateTarget(int validateTarget) {
 	this.validateTarget = validateTarget;
     }
+
+    @Override
+    public String toString() {
+	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

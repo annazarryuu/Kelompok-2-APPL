@@ -7,6 +7,8 @@ package com.appl.atm.model;
 
 import static com.appl.atm.model.Constants.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 /**
  *
@@ -15,8 +17,10 @@ import java.util.ArrayList;
 public class BankDatabase {
 
     private ArrayList<Account> accounts; // array of Accounts
+    private ArrayList<Statement> bankStatements;
 
     public BankDatabase() {
+	bankStatements = new ArrayList<Statement>();
 	accounts = new ArrayList<Account>();
 	accounts.add(new Account(00000, 00000, 0.0, 0.0, ADMIN));
 	accounts.add(new Account(1234, 1234, 1000.0, 1200.0, SISWA));
@@ -34,6 +38,55 @@ public class BankDatabase {
 	return null; // if no matching account was found, return null
     }
 
+    public ArrayList<Statement> getBankStatement(int accountNumber) {
+	ArrayList<Statement> result = new ArrayList<Statement>();
+
+	for (int i = 0; i < bankStatements.size(); i++) {
+	    if (bankStatements.get(i).getTransaction().getAccountNumber() == accountNumber) {
+		result.add(bankStatements.get(i));
+	    }
+	}
+
+	return result.isEmpty() ? null : result;
+    }
+    
+
+    public ArrayList<Statement> getBankStatementMonth(int accountNumber, int month) {
+	ArrayList<Statement> result = new ArrayList<Statement>();
+
+	for (int i = 0; i < bankStatements.size(); i++) {
+	    if (bankStatements.get(i).getTransaction().getAccountNumber() == accountNumber
+		    && bankStatements.get(i).getDate().getMonth() == month
+		    && bankStatements.get(i).getTransacionType() == WITHDRAWAL) {
+		
+		result.add(bankStatements.get(i));
+	    }
+	}
+
+	Collections.sort(result);
+	return result.isEmpty() ? null : result;
+    }
+
+    public ArrayList<Statement> getBankStatementToday(int accountNumber) {
+	ArrayList<Statement> result = new ArrayList<Statement>();
+	Date date = new SystemDate(0, null, null, null).getCurrDate();
+	
+	for (int i = 0; i < bankStatements.size(); i++) {
+	    if (bankStatements.get(i).getTransaction().getAccountNumber() == accountNumber
+		    && bankStatements.get(i).getDate().compareTo(date) == 0
+		    && bankStatements.get(i).getTransacionType() == TRANSFER) {
+		
+		result.add(bankStatements.get(i));
+	    }
+	}
+
+	return result.isEmpty() ? null : result;
+    }
+
+    public void addBankStatement(Statement theStatement) {
+	bankStatements.add(theStatement);
+    }
+
     public int authenticateUser(int userAccountNumber, int userPIN) {
 	Account userAccount = getAccount(userAccountNumber);
 
@@ -44,7 +97,7 @@ public class BankDatabase {
 	    return USER_NOT_FOUND;
 	}
     }
-    
+
     public int addAccount(int newAccountNumber, int newPIN, double newBalance, int newType) {
 	Account account = getAccount(newAccountNumber);
 	if (account != null) {
@@ -53,6 +106,18 @@ public class BankDatabase {
 	    account = new Account(newAccountNumber, newPIN, newBalance, newBalance, newType);
 	    accounts.add(account);
 	    return ACCOUNT_SUCCESSFULLY_CREATED;
+	}
+    }
+
+    public void monthlyPayment() {
+	for (int i = 0; i < accounts.size(); i++) {
+	    accounts.get(i).monthlyPayment();
+	}
+    }
+
+    public void dailyWithdrawReset() {
+	for (int i = 0; i < accounts.size(); i++) {
+	    accounts.get(i).dailyWithdrawReset();
 	}
     }
 
