@@ -27,6 +27,8 @@ public final class Constants {
     public static final int VALIDATE_DEPOSIT = 10; // admin only
     public static final int BANK_STATEMENT = 11;
     public static final int CHANGE_DATE = 12;
+    public static final int ADD_PAYMENT = 13; // admin only
+    public static final int PAYMENT = 14;
 
     // cancelled condition
     public static final int WITHDRAWAL_CANCELED = 7;
@@ -75,14 +77,17 @@ public final class Constants {
     public static final int ACCOUNT_SUCCESSFULLY_CREATED = 0;
     public static final int ACCOUNT_EXIST = 1;
     
-    //change PIN
+    // change PIN
     public static final int PIN_CHANGED_SUCCESSFULLY = 0;
     public static final int SAME_PIN_AS_BEFORE = 1;
     
-    //change date
+    // change date
     public static final int DATE_CHANGED_SUCCESSFULLY = 0;
     public static final int TIME_REWIND = 1;
     public static final int TIME_DOESNT_CHANGED = 2;
     public static final int ADMIN_TAX_PAID = 3;
     public static final int ADMIN_TAX_NOT_PAID = 4;
+    
+    // add payment
+    public static final int PAYMENT_ADDED = 0;
 }

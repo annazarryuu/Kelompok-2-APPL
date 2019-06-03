@@ -12,4 +12,9 @@ public class Keypad {
    public int getInput() {
       return input.nextInt(); // user enters an integer
    } 
+   
+   public String getInputString() {
+      return input.nextLine(); // user enters an integer
+   }
+   
 } 

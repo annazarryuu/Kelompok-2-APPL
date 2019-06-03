@@ -6,6 +6,7 @@
 package com.appl.atm.controller;
 
 import com.appl.atm.model.AddAccount;
+import com.appl.atm.model.AddPayment;
 import com.appl.atm.model.BalanceInquiry;
 import com.appl.atm.model.BankDatabase;
 import com.appl.atm.model.BankStatement;
@@ -23,6 +24,7 @@ import com.appl.atm.model.ValidateDeposit;
 import java.util.ArrayList;
 import com.appl.atm.model.DepositCashDispenser;
 import com.appl.atm.model.CheckCashDispenser;
+import com.appl.atm.model.Payment;
 import com.appl.atm.model.SystemDate;
 import com.appl.atm.model.Transfer;
 import com.appl.atm.model.UnblockAccount;
@@ -225,6 +227,22 @@ public class ATM {
 			    = new BankStatementController(currentTransaction);
 		    currentTransactionController.run(); // execute transaction
 		    break;
+		    
+		case ADD_PAYMENT:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new AddPaymentController(currentTransaction);
+		    currentTransactionController.run();
+		    break;
+		    
+		case PAYMENT:
+		    currentTransaction
+			    = createTransaction(mainMenuSelection);
+		    currentTransactionController
+			    = new PaymentController(currentTransaction);
+		    currentTransactionController.run();
+		    break;
 
 		case EXIT: // user chose to terminate session
 		    screen.displayMessageLine("\nExiting the system...");
@@ -308,6 +326,12 @@ public class ATM {
 	    case BANK_STATEMENT:
 		temp = new BankStatement(currentAccountNumber, screen, bankDatabase, keypad);
 		break;
+	    case ADD_PAYMENT:
+		temp = new AddPayment(currentAccountNumber, screen, bankDatabase, keypad);
+		break;
+	    case PAYMENT:
+		temp = new Payment(currentAccountNumber, screen, bankDatabase, keypad);
+		break;
 	}
 
 	return temp;
@@ -326,6 +350,8 @@ public class ATM {
 	menuList.add(new Menu(VALIDATE_DEPOSIT, "Deposit Validation", true, false, false, false));
 	menuList.add(new Menu(BANK_STATEMENT, "Bank statement", false, true, true, true));
 	menuList.add(new Menu(CHANGE_DATE, "Change Date", true, false, false, false));
+	menuList.add(new Menu(ADD_PAYMENT, "Add payment", true, false, false, false));
+	menuList.add(new Menu(PAYMENT, "Payment", false, true, true, true));
 	menuList.add(new Menu(EXIT, "Exit\n", true, true, true, true));
     }
 
