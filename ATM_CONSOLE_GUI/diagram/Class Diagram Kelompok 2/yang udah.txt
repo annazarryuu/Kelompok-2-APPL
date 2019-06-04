@@ -1,6 +1,7 @@
 Account :
 - constructor
 - deposit
+- withdraw
 
 BankDatabase :
 - constructor
@@ -10,3 +11,8 @@ BankDatabase :
 ATM :
 - run
 - authenticateUser
+
+Withdraw : 
+- constructor
+- executeTransaction
+
