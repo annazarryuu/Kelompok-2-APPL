@@ -44,15 +44,27 @@ public class Account {
 		return DEPOSIT_SUCCESS;
     }
     
+    // konstanta untuk withdraw
+    public static final int WITHDRAW_SUCCESSFUL = 0;
+    public static final int BALANCE_NOT_ENOUGH = -1;
+    public static final int DAILY_LIMIT_REACHED = -2;
+
     public int withdraw(int amount){
-        if(availableBalance >= amount){
-            availableBalance -= amount;
-			totalBalance -= amount;
-            return 1; //sukses withdraw
-        }
-        return 0; //gagal withdraw
-        
-        //belum ditambahin saat gagal karena withdraw limit
+		// Deskripsi	: mengurangi totalBalance dan availableBalance sesuai 
+		//					jumlah amount yg di-input
+		// Author		: Cahya
+                if(dailyWithdrawAmount >= dailyWithdrawLimit){
+                    if(availableBalance >= amount){
+                        availableBalance -= amount;
+                                    totalBalance -= amount;
+                        return WITHDRAW_SUCCESSFUL; //sukses withdraw
+                    } else {                
+                        return BALANCE_NOT_ENOUGH; //gagal withdraw, balance kurang
+                    }                    
+                } else {
+                    return DAILY_LIMIT_REACHED; //gagal withdraw, limit                                                       
+                }
+                //belum ditambahin saat gagal karena withdraw limit
     }
 
     /**
