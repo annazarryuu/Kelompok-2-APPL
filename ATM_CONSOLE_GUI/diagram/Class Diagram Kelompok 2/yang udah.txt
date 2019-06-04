@@ -1,0 +1,12 @@
+Account :
+- constructor
+- deposit
+
+BankDatabase :
+- constructor
+- getAccount
+- authenticateUser
+
+ATM :
+- run
+- authenticateUser
