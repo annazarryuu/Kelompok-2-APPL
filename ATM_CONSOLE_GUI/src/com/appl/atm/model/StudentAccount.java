@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.appl.atm;
+package com.appl.atm.model;
+
+import com.appl.atm.model.Account;
 
 /**
  *
  * @author Annazar
  */
-public class FutureAccount extends Account {
+public class StudentAccount extends Account {
     
-    public FutureAccount(int accountNumber, int pin,
+    public StudentAccount(int accountNumber, int pin,
 			int availableBalance, int totalBalance) {
 	
 		super(accountNumber, pin, availableBalance, totalBalance,
-			1, 0, 50);
+			0, 0, 20);
     }
     
 }

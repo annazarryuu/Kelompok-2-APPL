@@ -3,63 +3,51 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.appl.atm.model;
 
 /**
  *
- * @author Cahya
+ * @author Annazar
  */
 public class Account {
     private int accountNumber;
-    private int PINNumber;
-    private int balance;
+    private int pin;
+    private int availableBalance;
+    private int totalBalance;
     private int transferCost;
-    private int mothlyTax;
+    private int monthlyTax;
     private int dailyWithdrawLimit;
     private int dailyWithdrawAmount;
     
-    public Account(int accountNumber, int PINNumber, int balance, 
-            int transferCost, int monthlyTax, int dailyWithdrawLimit){
-        this.accountNumber = accountNumber;
-        this.PINNumber = PINNumber;
-        this.balance = balance;
-        this.transferCost = transferCost;
-        this.mothlyTax = monthlyTax;
-        this.dailyWithdrawLimit = dailyWithdrawLimit;        
+    public Account(int accountNumber, int pin, int availableBalance,
+			int totalBalance, int transferCost,
+			int monthlyTax, int dailyWithdrawLimit) {
+	
+		this.accountNumber = accountNumber;
+		this.pin = pin;
+		this.availableBalance = availableBalance;
+		this.totalBalance = totalBalance;
+		this.transferCost = transferCost;
+		this.monthlyTax = monthlyTax;
+		this.dailyWithdrawLimit = dailyWithdrawLimit;
     }
-        
-    /**
-     * @return the accountNumber
-     */
-    public int getAccountNumber() {
-        return accountNumber;
-    }
-
-    /**
-     * @param accountNumber the accountNumber to set
-     */
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    /**
-     * @return the balance
-     */
-    public int getBalance() {
-        return balance;
-    }
-
-    /**
-     * @param balance the balance to set
-     */
-    public void setBalance(int balance) {
-        this.balance = balance;
+    
+    // konstanta untuk deposit
+    private final int DEPOSIT_SUCCESS = 0;
+    
+    public int deposit(int amount) {
+		// Deskripsi	: menambah totalBalance sesuai dengan jumlah yang
+		//					di-input-kan pada parameter
+		// Author		: Annazar
+		
+		this.totalBalance += amount;
+		return DEPOSIT_SUCCESS;
     }
     
     public int withdraw(int amount){
-        if(getBalance() >= amount){
-            setBalance(getBalance() - amount);
+        if(availableBalance >= amount){
+            availableBalance -= amount;
+			totalBalance -= amount;
             return 1; //sukses withdraw
         }
         return 0; //gagal withdraw
@@ -68,72 +56,37 @@ public class Account {
     }
 
     /**
-     * @return the PINNumber
+     * @return the accountNumber
      */
-    public int getPINNumber() {
-        return PINNumber;
+    public int getAccountNumber() {
+		return accountNumber;
+    }
+
+	/**
+	 * @return the pin
+	 */
+	public int getPin() {
+		return pin;
+	}
+
+    /**
+     * @param pin the pin to set
+     */
+    public void setPin(int pin) {
+		this.pin = pin;
     }
 
     /**
-     * @param PINNumber the PINNumber to set
+     * @return the availableBalance
      */
-    public void setPINNumber(int PINNumber) {
-        this.PINNumber = PINNumber;
+    public int getAvailableBalance() {
+		return availableBalance;
     }
 
     /**
-     * @return the transferCost
+     * @return the totalBalance
      */
-    public int getTransferCost() {
-        return transferCost;
-    }
-
-    /**
-     * @param transferCost the transferCost to set
-     */
-    public void setTransferCost(int transferCost) {
-        this.transferCost = transferCost;
-    }
-
-    /**
-     * @return the mothlyTax
-     */
-    public int getMothlyTax() {
-        return mothlyTax;
-    }
-
-    /**
-     * @param mothlyTax the mothlyTax to set
-     */
-    public void setMothlyTax(int mothlyTax) {
-        this.mothlyTax = mothlyTax;
-    }
-
-    /**
-     * @return the dailyWithdrawLimit
-     */
-    public int getDailyWithdrawLimit() {
-        return dailyWithdrawLimit;
-    }
-
-    /**
-     * @param dailyWithdrawLimit the dailyWithdrawLimit to set
-     */
-    public void setDailyWithdrawLimit(int dailyWithdrawLimit) {
-        this.dailyWithdrawLimit = dailyWithdrawLimit;
-    }
-
-    /**
-     * @return the dailyWithdrawAmount
-     */
-    public int getDailyWithdrawAmount() {
-        return dailyWithdrawAmount;
-    }
-
-    /**
-     * @param dailyWithdrawAmount the dailyWithdrawAmount to set
-     */
-    public void setDailyWithdrawAmount(int dailyWithdrawAmount) {
-        this.dailyWithdrawAmount = dailyWithdrawAmount;
+    public int getTotalBalance() {
+		return totalBalance;
     }
 }

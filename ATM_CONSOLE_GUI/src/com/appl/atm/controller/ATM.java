@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.appl.atm;
+package com.appl.atm.controller;
 
+import com.appl.atm.model.BankDatabase;
+import com.appl.atm.model.Account;
 import java.util.Scanner;
 
 /**
