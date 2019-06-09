@@ -18,9 +18,10 @@ public class WithdrawController implements TransactionController {
 
 /*
     public static final int WITHDRAWAL_CANCELED = 6;
-    public static final int WITHDRAW_SUCCESSFUL = 1;
-    public static final int BALANCE_NOT_ENOUGH = 2;
-    public static final int CASHDISPENSER_NOT_ENOUGH = 3;
+    public static final int WITHDRAW_SUCCESSFUL = 0;
+    public static final int BALANCE_NOT_ENOUGH = -1;
+    public static final int DAILY_LIMIT_REACHED = -2;
+    public static final int CASHDISPENSER_NOT_ENOUGH = -3;
 */
     
     public WithdrawController(Transaction theTransaction

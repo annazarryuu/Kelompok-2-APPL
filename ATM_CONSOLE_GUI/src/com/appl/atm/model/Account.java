@@ -3,137 +3,102 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.appl.atm.model;
 
 /**
  *
- * @author Cahya
+ * @author Annazar
  */
 public class Account {
     private int accountNumber;
-    private int PINNumber;
-    private int balance;
+    private int pin;
+    private int availableBalance;
+    private int totalBalance;
     private int transferCost;
-    private int mothlyTax;
+    private int monthlyTax;
     private int dailyWithdrawLimit;
     private int dailyWithdrawAmount;
     
-    public Account(int accountNumber, int PINNumber, int balance, 
-            int transferCost, int monthlyTax, int dailyWithdrawLimit){
-        this.accountNumber = accountNumber;
-        this.PINNumber = PINNumber;
-        this.balance = balance;
-        this.transferCost = transferCost;
-        this.mothlyTax = monthlyTax;
-        this.dailyWithdrawLimit = dailyWithdrawLimit;        
+    public Account(int accountNumber, int pin, int availableBalance,
+			int totalBalance, int transferCost,
+			int monthlyTax, int dailyWithdrawLimit) {
+	
+		this.accountNumber = accountNumber;
+		this.pin = pin;
+		this.availableBalance = availableBalance;
+		this.totalBalance = totalBalance;
+		this.transferCost = transferCost;
+		this.monthlyTax = monthlyTax;
+		this.dailyWithdrawLimit = dailyWithdrawLimit;
     }
-        
+    
+    // konstanta untuk deposit
+    private final int DEPOSIT_SUCCESS = 0;
+    
+    public int deposit(int amount) {
+		// Deskripsi	: menambah totalBalance sesuai dengan jumlah yang
+		//					di-input-kan pada parameter
+		// Author		: Annazar
+		
+		this.totalBalance += amount;
+		return DEPOSIT_SUCCESS;
+    }
+    
+    // konstanta untuk withdraw
+    public static final int WITHDRAW_SUCCESSFUL = 0;
+    public static final int BALANCE_NOT_ENOUGH = -1;
+    public static final int DAILY_LIMIT_REACHED = -2;
+
+    public int withdraw(int amount){
+		// Deskripsi	: mengurangi totalBalance dan availableBalance sesuai 
+		//					jumlah amount yg di-input
+		// Author		: Cahya
+                if(dailyWithdrawAmount >= dailyWithdrawLimit){
+                    if(availableBalance >= amount){
+                        availableBalance -= amount;
+                                    totalBalance -= amount;
+                        return WITHDRAW_SUCCESSFUL; //sukses withdraw
+                    } else {                
+                        return BALANCE_NOT_ENOUGH; //gagal withdraw, balance kurang
+                    }                    
+                } else {
+                    return DAILY_LIMIT_REACHED; //gagal withdraw, limit                                                       
+                }
+                //belum ditambahin saat gagal karena withdraw limit
+    }
+
     /**
      * @return the accountNumber
      */
     public int getAccountNumber() {
-        return accountNumber;
+		return accountNumber;
+    }
+
+	/**
+	 * @return the pin
+	 */
+	public int getPin() {
+		return pin;
+	}
+
+    /**
+     * @param pin the pin to set
+     */
+    public void setPin(int pin) {
+		this.pin = pin;
     }
 
     /**
-     * @param accountNumber the accountNumber to set
+     * @return the availableBalance
      */
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
+    public int getAvailableBalance() {
+		return availableBalance;
     }
 
     /**
-     * @return the balance
+     * @return the totalBalance
      */
-    public int getBalance() {
-        return balance;
-    }
-
-    /**
-     * @param balance the balance to set
-     */
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
-    
-    public int withdraw(int amount){
-        if(getBalance() >= amount){
-            setBalance(getBalance() - amount);
-            return 1; //sukses withdraw
-        }
-        return 0; //gagal withdraw
-        
-        //belum ditambahin saat gagal karena withdraw limit
-    }
-
-    /**
-     * @return the PINNumber
-     */
-    public int getPINNumber() {
-        return PINNumber;
-    }
-
-    /**
-     * @param PINNumber the PINNumber to set
-     */
-    public void setPINNumber(int PINNumber) {
-        this.PINNumber = PINNumber;
-    }
-
-    /**
-     * @return the transferCost
-     */
-    public int getTransferCost() {
-        return transferCost;
-    }
-
-    /**
-     * @param transferCost the transferCost to set
-     */
-    public void setTransferCost(int transferCost) {
-        this.transferCost = transferCost;
-    }
-
-    /**
-     * @return the mothlyTax
-     */
-    public int getMothlyTax() {
-        return mothlyTax;
-    }
-
-    /**
-     * @param mothlyTax the mothlyTax to set
-     */
-    public void setMothlyTax(int mothlyTax) {
-        this.mothlyTax = mothlyTax;
-    }
-
-    /**
-     * @return the dailyWithdrawLimit
-     */
-    public int getDailyWithdrawLimit() {
-        return dailyWithdrawLimit;
-    }
-
-    /**
-     * @param dailyWithdrawLimit the dailyWithdrawLimit to set
-     */
-    public void setDailyWithdrawLimit(int dailyWithdrawLimit) {
-        this.dailyWithdrawLimit = dailyWithdrawLimit;
-    }
-
-    /**
-     * @return the dailyWithdrawAmount
-     */
-    public int getDailyWithdrawAmount() {
-        return dailyWithdrawAmount;
-    }
-
-    /**
-     * @param dailyWithdrawAmount the dailyWithdrawAmount to set
-     */
-    public void setDailyWithdrawAmount(int dailyWithdrawAmount) {
-        this.dailyWithdrawAmount = dailyWithdrawAmount;
+    public int getTotalBalance() {
+		return totalBalance;
     }
 }

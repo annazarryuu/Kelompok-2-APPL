@@ -17,12 +17,13 @@ public class Withdraw extends Transaction {
 
     /* Constants */
     public static final int WITHDRAWAL_CANCELED = 6;
-    public static final int WITHDRAW_SUCCESSFUL = 1;
-    public static final int BALANCE_NOT_ENOUGH = 2;
-    public static final int CASHDISPENSER_NOT_ENOUGH = 3;
+    public static final int WITHDRAW_SUCCESSFUL = 0;
+    public static final int BALANCE_NOT_ENOUGH = -1;
+    public static final int DAILY_LIMIT_REACHED = -2;
+    public static final int CASHDISPENSER_NOT_ENOUGH = -3;
 
 
-    // Withdrawal constructor
+    // Withdraw constructor
     public Withdraw(Account account, BankDatabase bankDatabase,
 	    CashDispenser cashDispenser) {
 
@@ -30,23 +31,36 @@ public class Withdraw extends Transaction {
         super(account, bankDatabase);
 	this.cashDispenser = cashDispenser;
     }
+
+
     @Override
     public int executeTransaction() {
-        Account account = getBankDatabase().getAccount(getUserAccount().getAccountNumber());
+		// Deskripsi	: melakukan withdraw sesuai jumlah amount
+		//					yang diinput
+		// Author		: Cahya		
 
-	if (cashDispenser.isSufficientCashAvailable(amount)) {
-	    cashDispenser.dispenseCash(amount);
-            int withdrawResult = account.withdraw(amount);
-            if(withdrawResult == 1){                
-                return WITHDRAW_SUCCESSFUL;
-            } else if(withdrawResult == 0){
-                return BALANCE_NOT_ENOUGH;                
-            } else {
-                return -1; //saat ada kasus lain, misal : mencapai daily withdraw limit, dll
-            }
-	} else {
-	    return CASHDISPENSER_NOT_ENOUGH;
-	}    
+                Account account = getBankDatabase().getAccount(getUserAccount().getAccountNumber());
+
+                if (cashDispenser.isSufficientCashAvailable(amount)) {
+                    int withdrawResult = account.withdraw(amount);
+                    switch(withdrawResult){
+                        case 0 : { //sukses
+                            cashDispenser.dispenseCash(amount);
+                            return WITHDRAW_SUCCESSFUL;
+                        }
+                        case -1 : { //gagal, balance kurang
+                            return BALANCE_NOT_ENOUGH;                
+                        }
+                        case -2 : { //gagal, sudah mencapai limit harian
+                            return DAILY_LIMIT_REACHED;                
+                        }
+                        default :{                            
+                            return -999; //mungkin akan ada kasus lain
+                        }
+                    }
+                } else {
+                    return CASHDISPENSER_NOT_ENOUGH;
+                }    
     }
     
     /**
